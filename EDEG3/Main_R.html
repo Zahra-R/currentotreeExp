@@ -1,0 +1,107 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+    <link href="{{ static 'global/EDEGgeneral.css'}}" rel="stylesheet">
+    <link href="{{ static 'global/css/EDEGcustom.css'}}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<body>
+   
+    
+  
+
+    <div class="No-label">
+        
+       <h4> Current Round</h4>
+            <p style="text-align: left; font-size: 0.9rem;">
+                Round number {{game_round}} out of {{C.NUM_ROUNDS}} in this game.
+            </p>
+            <div class="" style="padding-bottom:20px;">
+                <!-- Please choose one of the options. /your preferred option  edit text  -->
+                {% if game_round > 5 %} 
+                 <p>Please choose one of the options.</p>  <span class="Exp_Con"> While this is just a rough estimate, <b>you can think about {{carbonB}} lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b> </span>
+                {%else%}
+                 <p> Please choose one of the options. </p> 
+                 <p> If you choose Option A, you will have a 90% chance to <b>gain {{ C.high_lottery }} points</b> and a 10% chance to <b>lose {{ C.low_lottery }}&nbsp;points.</b>  <span class="Exp_Con"> Option A emits {{carbonB}} lbs of CO2 equivalents. </span> </p>
+                 <p> If you choose Option B, you will <b> gain {{ C.safe_outcome }} points.</b> <span class="Exp_Con"> Option B emits {{C.carbonA}} lbs of CO2 equivalents. </span> </p> <p>  <span class="Exp_Con">  While this is just a rough estimate, <b>you can think about {{carbonB}} lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b>  </span> </p>
+                 {% if game_round == 1 %} 
+                        {% if Exp_Con == 3 %} 
+                        <p> Please bear in mind that Option A entails carbon emissions ({{carbonB}} lbs CO2, which is around {{carbonMiles | to0}} miles in an average passenger car). No emissions will be caused by Option B. You will not be reminded about the carbon emissions in the following rounds, but we will realize the emissions following your choice of a randomly drawn round at the end of the study.</p>
+                        {% endif %}
+                    {% endif %}
+                {%endif%}  
+            </div>
+            <table style=" width:100%" class="table" id="choicetable">
+                <tbody>
+                    <tr style="font-weight: bold;"> <th> </th> <td> Option A </td> <td> Option B </td></tr>
+                    
+                    <tr> <th> Payoff</th>
+                    <td>   <span > Get <span class="point_span">{{ C.high_lottery }}</span> points with <span class="point_span">90%</span> probability </span> <br>  <span > Get <span class="point_span">{{ C.low_lottery }}</span> points with <span class="point_span">10%</span> probability </span> </td>   <td> Get <span class="point_span">{{ C.safe_outcome }}</span> points for sure</td>
+                    </tr>
+                    <tr class="Exp_Con" style="border-color: white;">
+                        <th  > Emissions</th> <td> Emit <span class="point_span">{{carbonB}}</span> lbs CO2</td>  <td> Emit <span class="point_span">{{C.carbonA}}</span> lbs CO2 </td>
+                    </tr>
+                        
+
+                    <tr style="border-color: white;">
+                        <th> </th>
+                        <td style="text-align: left;"><button name="choice" id="abtn" value="A"
+                            class="btn btn-primary btn-large" disabled> &nbsp;&nbsp;&nbsp;&nbsp;Choose Option A&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+                        <td style="text-align: left;"><button name="choice" id="bbtn" value="B"
+                            class="btn btn-primary btn-large" disabled>&nbsp;&nbsp;&nbsp;&nbsp;Choose Option B&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+        
+        
+    </div>
+
+      
+
+            {{ formfield_errors "choice" }}
+
+    
+
+
+</body>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    Exp_Con = "{{Exp_Con}}"
+    num_choices = "{{ C.NUM_ROUNDS }}";
+    lottery_a_hi = "{{ C.high_lottery }}";
+    lottery_a_lo = "{{ C.low_lottery }}";
+    lottery_b_hi = "{{ C.safe_outcome }}";
+    lottery_b_lo = "{{ C.safe_outcome }}";
+
+    enablebtn = function () {
+                document.getElementById("bbtn").disabled = false;
+                document.getElementById("abtn").disabled = false;
+                //document.getElementById("outcometable").style.display = "inline"
+                //document.getElementById("outcometable").setAttribute("style", "margin-left: auto; margin-right: auto;  ");
+                // document.getElementById("outcomesrow").setAttribute("style", "color: white;");
+                // document.getElementById("tabletitle").setAttribute("style", "color: white;");
+                // document.getElementById("chosenarrow").setAttribute("style", "color: white;");
+
+            }
+
+            activate_Exp_Con = function(){
+                if(Exp_Con == 2) {
+                    $('.Exp_Con').css("display", "revert")
+                }
+            }
+            window.onload = function () {
+                activate_Exp_Con();
+                setTimeout(function () { enablebtn() }, 1000);
+                // edit the timeout to 1200 or more!!!!
+            }
+</script>
+
+
+{% endblock %}

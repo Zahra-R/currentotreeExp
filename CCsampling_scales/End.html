@@ -1,0 +1,54 @@
+
+{% block styles %}
+    <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    Your feedback on the study
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+
+{% formfield player.faithful %}
+
+{% formfield player.use_data %}
+
+
+<div class="mb-3 _formfield">
+    
+    <label class="col-form-label" for="id_generalFeedback">{{ form.generalFeedback.label }}</label>
+    <div class="controls">
+        <textarea style="width:80%" class="form-control" rows="4" id="id_generalFeedback" name="generalFeedback"></textarea>
+    </div>
+    {% formfield_errors 'generalFeedback' %}
+</div>
+
+
+
+
+    
+
+
+<div class="next-btn">  
+    <div style="float: right; padding-top: 5vh;">
+         {% next_button %} 
+    </div>
+</div> 
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+</script>
+
+
+{% endblock %}
+
+

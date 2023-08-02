@@ -1,0 +1,122 @@
+
+{% block styles %}
+    <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    Thank you very much for your participation. 
+{% endblock %}
+
+{% block content %}
+
+
+
+<div >
+ <p>
+    You have read 12 statements regarding the climate change. Not all statements were necessarily true. 
+    By true, we mean that they convey scientific facts that are endorsed by the scientific community, as well as the larger public. 
+
+    The following statements you have read were misleading. Here you can read the corrected version. 
+ </p>   
+
+ <table id="debriefTable">
+    <tr> <th> Misleading Statement</th> <th>Corrected Statement</th> </tr>
+ </table>
+  
+</div>
+
+
+
+
+    
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    var seenM = '{{seenM}}'
+    seenM = eval(seenM)
+    var statement
+
+
+    async function initMisinfo() {
+        const result = await $.getJSON("{{static 'global/js/stimuli/ClimateMisinfo.json'}}", function() {})
+        const mtexts = await result['CCMisinfo']
+        statement.fillTable2(mtexts)
+    }
+
+
+    async function initMisinfo2() {
+        const mtexts = await $.getJSON("{{static 'global/js/stimuli/ClimateMisinfo.json'}}", function() { })
+        statement.fillTable2(mtexts['CCMisinfo'])
+    }
+
+statement = {
+
+
+
+    fillTable(){
+        for (let i = 0; i < seenM.length; i++){
+            index = seenM[i]
+            thisseenM = statement.mtexts[index].finalStatement
+            thiscorrectedM = statement.mtexts[index].correctedStatement
+            var mytable = document.getElementById("debriefTable");
+
+            // Create an empty <tr> element and add it to the 1st position of the table:
+            var row = mytable.insertRow(-1);
+
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+
+            // Add some text to the new cells:
+            cell1.innerHTML = thisseenM;
+            cell2.innerHTML = thiscorrectedM;
+
+        }
+    },
+
+
+    fillTable2(mtexts){
+        for (let i = 0; i < seenM.length; i++){
+            index = seenM[i]
+            thisseenM = mtexts[index].finalStatement
+            thiscorrectedM = mtexts[index].correctedStatement
+            var mytable = document.getElementById("debriefTable");
+
+            // Create an empty <tr> element and add it to the 1st position of the table:
+            var row = mytable.insertRow(-1);
+
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+
+            // Add some text to the new cells:
+            cell1.innerHTML = thisseenM;
+            cell2.innerHTML = thiscorrectedM;
+
+        }
+    }
+}
+
+
+
+
+window.onload = function () {
+
+    initMisinfo2();
+
+
+    
+
+}
+
+
+</script>
+
+
+{% endblock %}
+
+

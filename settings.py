@@ -1,48 +1,61 @@
 from os import environ
 
 
-### Action Plan.
-# add noise to option and make main reverse, main and feedback and feedback reverse have parameters as points instead of fixed numbers
-# add "attention check" how many co2 emissions option entails. 
-# randomly draw co2 emissions: have parameters as emissions. 
-# try to make quotas for democrats 
-
 SESSION_CONFIGS = [
-     dict(
-        name='DEG_study_FullDesing_Reps', 
-        app_sequence=[ 'Scales',], 
+    ### EDEG -3
+    dict(
+        name='EDEG_study_FullDesing_Reps', 
+        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5, 
         group = "reps"
     ),
 
-      dict(
-        name='DEG_study2_FullDesign_Dems', 
-        app_sequence=[ 'Intro','EDEG', 'Scales',], 
+    dict(
+        name='EDEG_study2_FullDesign_Dems', 
+        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5, 
         group = "dems"
     ),
 
     dict(
-        name='DEG_study2_EmissionsSalient',
-        app_sequence=['Intro', 'EDEG', 'Scales',], 
+        name='EDEG_study2_EmissionsSalient',
+        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5,
         Exp_Con=2
     ),
     dict(
         name='DEG_study2_EmissionsDecay',
-        app_sequence=[ 'Intro','EDEG', 'Scales',], 
+        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5,
         Exp_Con=3
     ),
     dict(
         name='DEG_study2_Control',
-        app_sequence=[ 'Intro','EDEG', 'Scales',], 
+        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5,
         Exp_Con=1,
         doc="""
-         Edit the 'num_apples' parameter to change the factor by which
-         contributions to the group are multiplied.
+         Here you can make potential comments that will be displayed to the admin
          """
+    ),
+    ### CC SAMPLING
+    dict(
+        name='samplingPilot',
+        app_sequence=['CCsampling_intro', 'CCsampling', 'CCsampling_scales'],
+        num_demo_participants=5,
+    ),
+    ### FINANCIAL DECISION MAKING
+     dict(
+        name='FinancialDM_CertainFirst',
+        app_sequence=['FinancialDM_Intro', 'FinancialDM_C', 'FinancialDM_U'],
+        num_demo_participants=5,
+        certainFirst = True
+    ),
+    dict(
+        name='FinancialDM_CertainSecond',
+        app_sequence=['FinancialDM_Intro', 'FinancialDM_U', 'FinancialDM_C'],
+        num_demo_participants=5,
+        certainFirst = False
     ),
 
 
@@ -58,6 +71,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 PARTICIPANT_FIELDS = [
+    # EDEG FIELDS
     'Exp_Con',
     'outcomeCarbon',
     'reversedbuttons',
@@ -68,7 +82,20 @@ PARTICIPANT_FIELDS = [
     'chosen_round_choice',
     'payoff_decimal',
     'game_rounds', 
-    'finished'
+    'finished',
+
+    #CC SAMPLING FIELDS
+    'randomInfoArray',
+    'randomMisinfoArray', 
+    'reverseBoxes',
+    'seenMisinfo',
+
+    ### FINANCIAL DECISION MAKING
+    'shuffledOrderC',
+    'shuffledOrderU',
+    'carbonLeft', 
+    'outcomeOneTop'
+
 ]
 
 

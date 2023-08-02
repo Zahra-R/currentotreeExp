@@ -1,0 +1,246 @@
+
+
+
+{% block styles %}
+  <!-- Compiled and minified CSS -->
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">  -->
+  <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<body>
+
+    <h2 id="caption1"> Please choose a box</h2>
+    <h4 id="caption2"> From which box do you want to read the next statement? </h4>
+    <p style="text-align: left; font-size: 0.9rem;">
+        Round {{round_number}} out of {{C.NUM_ROUNDS}}
+     </p>
+<div id="choice">
+    <table style=" width:100%" class="table" id="choicetable">
+        <tbody>
+          
+                
+
+            <tr style="border-color: white;">
+                <td style="text-align: center;"><button  type="button"  id="abtn" value="i" onclick="statement.showRoundText(boxname = this.id, infoType = this.value)"
+                    class="choiceButton" disabled> <span> Box A </span></button></td>
+                <td style="text-align: center;"><button type="button"  id="bbtn" value="m" onclick="statement.showRoundText(boxname =this.id, infoType = this.value)"
+                    class="  choiceButton" disabled><span> Box B</span> </button></td>
+            </tr>
+        </tbody>
+    </table> </div>
+
+
+
+<div id="rate_statement" style="display:none; opacity:0;">
+    <div class="slidecontainer">
+        <p> How likely is this statement true?</p>
+        <table style="width:100%">
+            <tr>
+                <td class="rangelabel" style="width:20%"> very unlikely  </td>
+                <td style="width:60%">
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                        id="range_likelyTrue" name="range_likelyTrue" >
+                </td>
+                <td class="rangelabel" style="width:20%"> very likely   </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="slidecontainer">
+        <p> How much do you agree with this statement?</p>
+        <table style="width:100%">
+            <tr>
+                <td  class="rangelabel"  style="width:20%"> not at all  </td>
+                <td style="width:60%">
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                        id="range_agree" name="range_agree" >
+                </td>
+                <td class="rangelabel" style="width:20%"> very much  </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="slidecontainer">
+        <p> How concerned are you about climate change?</p>
+        <table style="width:100%">
+            <tr>
+                <td class="rangelabel" style="width:20%"> not at all  </td>
+                <td style="width:60%">
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                        id="range_ccconcern" name="range_ccconcern" >
+                </td>
+                <td class="rangelabel" style="width:20%"> very much  </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+    <button class="btn" style="float:right;" type="button" id="nextst" onclick="nextRound(triggernext)" disabled>Next</button>
+
+    <input type="hidden" name="boxChoice" id="boxChoice" />
+    <button type="hidden" style="display:none;"  name="mynextbtn" id="mynextbtn"> </button>
+    <input type="hidden" name="statementText" id="statementText" />
+    <input type="hidden" name="statementID" id="statementID" />
+
+</body>
+
+{{ formfield_errors 'boxChoice' }}
+{{ formfield_errors 'statementText' }}
+{{ formfield_errors 'statementID' }}
+{{ formfield_errors 'range_agree' }}
+{{ formfield_errors 'range_likelyTrue' }}
+{{ formfield_errors 'range_ccconcern' }}
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+  <!-- Compiled and minified JavaScript -->  
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script> 
+var statement
+
+var round_number = "{{round_number}}"
+var randomInfoNumber= "{{randomInfo}}"
+var randomMisinfoNumber = "{{randomMisinfo}}"
+var reverse = "{{reverseBoxes}}"
+
+enablebtn = function () {
+        document.getElementById("bbtn").disabled = false;
+        document.getElementById("abtn").disabled = false;
+}
+
+
+triggernext = function() {
+    $("#mynextbtn").trigger("click")
+}
+
+    
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+$(document).ready(function () {
+    if (reverse == "True") {
+        $('#abtn')[0].value = "m"
+        $('#bbtn')[0].value = "i"
+    }
+})
+
+
+
+statement = {
+
+    initInfo(callback) { 
+        console.log("initinfo start")
+        $.getJSON("{{static 'global/js/stimuli/ClimateInfo.json'}}", function (json) {
+            statement.itexts = json["CCInfo"];
+        });
+        callback();
+    },
+
+    initMisinfo(){
+        console.log("initmisinfo start")
+        $.getJSON("{{static 'global/js/stimuli/ClimateMisinfo.json'}}", function (json) {
+            statement.mtexts = json["CCMisinfo"];
+        });
+        console.log("initmisinfo end");
+        
+    },
+
+    showRoundText(boxname, infoType){
+         //if($('#abtn').html().length < 40 && $('#abtn').html().length < 40 ){
+            document.cookie = "boxname=" + boxname  // + ";path=/" + round_number;
+            document.cookie = "infoType=" + infoType //+ ";path=/" + round_number;
+            console.log("here in showroundtext printing cookies" , document.cookie) 
+            if (infoType == "i") {
+                roundText = statement.itexts[randomInfoNumber].finalStatement
+                roundTextID = statement.itexts[randomInfoNumber].tweetid
+                forminputs.boxChoice.value = "i"
+                
+            }
+            if (infoType == "m") {
+                roundText = statement.mtexts[randomMisinfoNumber].finalStatement
+                roundTextID = statement.mtexts[randomMisinfoNumber].tweetid
+                forminputs.boxChoice.value = "m"
+            }
+            //$('#show_statement').html(roundText)
+            $('#' + boxname).append("<br><br>" + roundText)
+            $('#' + boxname).addClass('transform-active-frame')
+            setTimeout(function () {$('#' + boxname).addClass('transform-active')}, 20);
+            $('#rate_statement').css("display", "revert")
+            setTimeout(function () { $('#rate_statement').addClass('transform-slidervisible')}, 20);
+            $('#caption1').html("")
+            $('#caption2').html("Plase read the statement and answer the questions.")
+
+            // save to db
+            forminputs.statementText.value = roundText
+            forminputs.statementID.value = roundTextID
+            document.getElementById("bbtn").disabled = true;
+            document.getElementById("abtn").disabled = true;
+            setTimeout(function () { document.getElementById("nextst").disabled = false;}, 2000);
+    }
+}
+
+function checkForChoice() {
+    console.log("checkingcookies checkfchoice")
+
+    if (getCookie("boxname")!='') {
+            console.log("at least that workds")
+            console.log(getCookie("boxname"))
+            //statement.showRoundText(boxname = getCookie('boxname'), infoType = getCookie('infoType'))
+            if (statement.itexts !=undefined && statement.mtexts !=undefined ){
+                statement.showRoundText(boxname = getCookie('boxname'), infoType = getCookie('infoType'))
+            }
+            else {
+                console.log("have to go again")
+                setTimeout(function () { checkForChoice();}, 3);
+            }
+            
+        } 
+    else {
+        setTimeout(function () { enablebtn() }, 100);
+    }
+}
+
+
+function nextRound(callback) {
+    document.cookie = 'infoType=; expires=Thu, 01 Jan 1970 00:00:00 UTC'
+    document.cookie = 'boxname=; expires=Thu, 01 Jan 1970 00:00:00 UTC'
+    callback()
+}
+
+
+
+window.onload = function () {
+        statement.initInfo(checkForChoice) // checkForChoice)
+        statement.initMisinfo()
+        //setTimeout(function () { enablebtn() }, 100);
+        // check if user has been on this page before (e.g. the page is reloaded)
+        // if so, then display the message from the box the user has previously selected with the help of cookies
+      
+        
+}
+
+
+</script>
+
+{% endblock %}
