@@ -36,8 +36,6 @@ class Player(BasePlayer):
 
 
 
-def creating_session(subsession: Subsession):
-    print('creating subsession scales')
         
 
 

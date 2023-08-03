@@ -79,8 +79,6 @@ class Player(BasePlayer):
 # FUNCTIONS
 
 
-def creating_session(subsession: Subsession):
-    print('creating subsession scales')
         
 
 
@@ -134,7 +132,6 @@ class Trust(Page):
 
     @staticmethod
     def vars_for_template(player:Player):
-        print(player.round_number)
         Exp_Con = player.participant.Exp_Con
         return {
             'Exp_Con' : Exp_Con

@@ -2,6 +2,7 @@ from otree.api import *
 import numpy as np
 import random
 from random import choice as random_draw
+import csv
 
 doc = """
 Read quiz quest 
@@ -9,7 +10,6 @@ Read quiz quest
 
 
 def read_csv():
-    import csv
     f = open(__name__ + '/stimuliC.csv', encoding='utf-8-sig')
     rows = list(csv.DictReader(f))
     return rows

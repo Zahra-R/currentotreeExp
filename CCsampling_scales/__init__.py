@@ -67,8 +67,6 @@ class Player(BasePlayer):
   # FUNCTIONS
 
 
-def creating_session(subsession: Subsession):
-    print('creating subsession scales')
         
 
 
@@ -128,8 +126,6 @@ class Conclude2(Page):
             #string.replace(old, new, count)
             statementstring = misinfo[x]['finalStatement']
             statementstring =statementstring.replace("'", "")
-            print("##############################################")
-            print(statementstring)
             seenMstatements.append(statementstring)
             seenMcorrections.append(misinfo[x]['correctedStatement'])
         return {

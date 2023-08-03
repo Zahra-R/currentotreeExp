@@ -57,7 +57,6 @@ def creating_session(subsession:Subsession):
 def allocateBoxNames(player: Player):
     reversed = player.participant.reverseBoxes
     # if player.round_number % C.ROUNDS_PER_CONDITION == 0:
-    #     print('we are drawing reveresedbuttons')
     likingA = player.boxlikingInfo
     likingB = player.boxlikingMisinfo
     recomA = player.boxrecommendationInfo
@@ -101,7 +100,6 @@ class sampling(Page):
     def before_next_page(player: Player, timeout_happened):
         if(player.boxChoice == "m"):
             player.participant.seenMisinfo.append(player.participant.randomMisinfoArray[player.round_number-1])
-        print('maybe I should draw the text here')
 
 
 # class _sampling(Page):
@@ -120,7 +118,7 @@ class sampling(Page):
 #     def before_next_page(player: Player, timeout_happened):
 #         if(player.boxChoice == "m"):
 #             player.participant.seenMisinfo.append(player.participant.randomMisinfoArray[player.round_number-1])
-#         print('maybe I should draw the text here')
+
 
 
 class boxrating(Page):
@@ -133,7 +131,6 @@ class boxrating(Page):
     def before_next_page(player: Player, timeout_happened):
         print('in before next page function', player.boxlikingInfo, player.boxlikingMisinfo, player.boxrecommendationInfo, player.boxrecommendationMisinfo )
         allocateBoxNames(player)
-        print('do you even get here')
 
 
 page_sequence = [

@@ -2,6 +2,7 @@ from otree.api import *
 import numpy as np
 import random
 from random import choice as random_draw
+import csv
 
 doc = """
 Read quiz quest 
@@ -9,8 +10,6 @@ Read quiz quest
 
 
 def read_csv():
-    import csv
-
     f = open(__name__ + '/stimuliU.csv', encoding='utf-8-sig')
     rows = list(csv.DictReader(f))
     return rows
@@ -34,7 +33,6 @@ def creating_session(subsession: Subsession):
             random.shuffle(shuffledOrderU)
             player.participant.shuffledOrderU = shuffledOrderU   
         current_question = C.QUESTIONS_U[player.participant.shuffledOrderU[subsession.round_number-1]]
-        print(current_question)
         player.moneyA1 = int(current_question['moA1'])
         player.moneyA2 = int(current_question['moA2'])
         player.carbonA1 = int(current_question['coA1'])

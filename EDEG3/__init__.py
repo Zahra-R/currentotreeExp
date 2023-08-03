@@ -50,8 +50,7 @@ def creating_session(subsession: Subsession):
     for player in subsession.get_players():
         if subsession.round_number == 1:
             player.participant.game_rounds = C.NUM_ROUNDS
-            print("passing round numer", C.NUM_ROUNDS)
-    print('creating subsession main')
+
 
 def output_outcome(player: Player):
     #tax = player.tax
@@ -61,14 +60,12 @@ def output_outcome(player: Player):
         outcomeB = C.high_lottery
     else:
         outcomeB = C.low_lottery
-    print('these are the outcomes', outcomeA, outcomeB)
     return outcomeA, outcomeB
 
 def make_choice(player: Player, choiceMade):
     Exp_Con = player.participant.Exp_Con
     reversedbuttons = player.participant.reversedbuttons
     # if player.round_number % C.ROUNDS_PER_CONDITION == 0:
-    #     print('we are drawing reveresedbuttons')
     player.choice = choiceMade
     player.outcomeA, player.outcomeB = output_outcome(player)
     if reversedbuttons == True:
@@ -80,7 +77,6 @@ def make_choice(player: Player, choiceMade):
         player.round_outcome = player.outcomeA
     if player.choice == "B":
         player.round_outcome = player.outcomeB
-    print('in make choice again',  player.round_outcome)
 
 def determine_outcome(player:Player, chosen_round):
             player.participant.chosen_round_outcome = player.in_round(chosen_round).round_outcome
@@ -125,9 +121,7 @@ class Main(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        print('in before next page function')
         make_choice(player, player.choice)
-        print('do you even get here')
 
 class Main_R(Page):
     form_model = 'player'
@@ -158,9 +152,7 @@ class Main_R(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        print('in before next page function', player.choice)
         make_choice(player, player.choice)
-        print('do you even get here')
 
 class Feedback(Page):
     form_model = 'player'
@@ -191,7 +183,6 @@ class Feedback(Page):
                 - int((player.round_number ) / C.ROUNDS_PER_CONDITION)
                 * C.ROUNDS_PER_CONDITION
             )
-            print(game_round)
             return {
                 'previous_choice': previous_choice,
                 'previous_outcome': previous_outcome,
@@ -240,7 +231,6 @@ class Feedback_R(Page):
                 - int((player.round_number ) / C.ROUNDS_PER_CONDITION)
                 * C.ROUNDS_PER_CONDITION
             )
-            print(game_round)
             return {
                 'previous_choice': previous_choice,
                 'previous_outcome': previous_outcome,

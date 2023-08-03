@@ -67,7 +67,6 @@ def creating_session(subsession: Subsession):
             if player.participant.Exp_Con > 1:
                 player.outcomeCarbon = next(amount_carbon)
             player.participant.outcomeCarbon = player.outcomeCarbon
-            print(player.reversedbuttons)
 
 
 
@@ -75,7 +74,6 @@ def make_choice(player: Player, choiceMade):
     Exp_Con = player.participant.Exp_Con
     reversedbuttons = player.participant.reversedbuttons
     # if player.round_number % C.ROUNDS_PER_CONDITION == 0:
-    #     print('we are drawing reveresedbuttons')
     player.preference = choiceMade
     if reversedbuttons == True:
         if choiceMade == 'A':
