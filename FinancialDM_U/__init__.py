@@ -96,9 +96,6 @@ class choiceTask(Page):
         }
     @staticmethod
     def before_next_page(player, timeout_happened):
-        if timeout_happened:
-            player.timedout = True
-            player.choice = None
         player.responsetime = player.response_time
 
 
