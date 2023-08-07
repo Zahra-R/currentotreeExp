@@ -71,15 +71,15 @@ class Player(BasePlayer):
     choice = models.StringField()
     input_keyboard = models.IntegerField()
     timedout = models.BooleanField(default=False)
-    page_load = models.IntegerField(initial=0)
-    page_submit = models.IntegerField(null=True)
+    page_load = models.StringField(initial = '0')
+    page_submit = models.StringField(null=True)
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
     reverse = models.IntegerField()
     @property
     def response_time(player):
         if player.page_submit != None:
-            return player.page_submit - player.page_load
+            return int(player.page_submit) - int(player.page_load)
         
         
 

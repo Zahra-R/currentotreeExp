@@ -53,8 +53,8 @@ class Player(BasePlayer):
     choice = models.StringField()
     input_keyboard = models.IntegerField()
     timedout = models.BooleanField(default=False)
-    page_load = models.IntegerField(initial=0)
-    page_submit = models.IntegerField(null=True)
+    page_load = models.StringField(initial = '0', default = '0')
+    page_submit = models.StringField(null=True)
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
     reverse = models.IntegerField()
@@ -76,7 +76,7 @@ class choiceTask(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.page_submit != None:
-            player.responsetime = player.page_submit - player.page_load
+            player.responsetime = int(player.page_submit) - int(player.page_load)
 
 class Results(Page):
     @staticmethod

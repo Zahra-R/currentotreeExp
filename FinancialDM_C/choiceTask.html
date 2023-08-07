@@ -167,7 +167,7 @@
 
 
 
-<input id="page_load" type="hidden" name="page_load" value={{player.page_load}} />
+<input id="page_load" type="hidden" name="page_load" value={{player.field_maybe_none('page_load')}} />
 <input id="page_submit" type="hidden" name="page_submit" />
 
 
@@ -189,7 +189,7 @@
     var choiceListener
 
     var reverse = "{{reverse}}"
-    var page_load = "{{player.page_load}}"
+    var page_load = "{{player.field_maybe_none('page_load')}}"
 
     choiceListener = {
 

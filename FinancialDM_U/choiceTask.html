@@ -188,6 +188,13 @@
 <input id="page_submit" type="hidden" name="page_submit" />
 
 
+
+{{ formfield_errors 'page_load' }}
+{{ formfield_errors 'page_submit' }}
+{{ formfield_errors 'choice' }}
+{{ formfield_errors 'input_keyboard' }}
+
+
 {% endblock %}
 
 {% block scripts %}
