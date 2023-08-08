@@ -167,7 +167,7 @@
 
 
 
-<input id="page_load" type="hidden" name="page_load" value={{player.field_maybe_none('page_load')}} />
+<input id="page_load" type="hidden" name="page_load" value={{player.page_load}} />
 <input id="page_submit" type="hidden" name="page_submit" />
 
 
@@ -189,7 +189,7 @@
     var choiceListener
 
     var reverse = "{{reverse}}"
-    var page_load = "{{player.field_maybe_none('page_load')}}"
+    var page_load = "{{player.page_load}}"
 
     choiceListener = {
 
@@ -212,7 +212,7 @@
         AClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            jQuery('#page_submit').val(submit_timestamp);
+            jQuery('#page_submit').val(String(submit_timestamp));
             console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("A");
@@ -224,7 +224,7 @@
         BClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            jQuery('#page_submit').val(submit_timestamp);
+            jQuery('#page_submit').val(String(submit_timestamp));
             console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("B");
@@ -315,7 +315,7 @@
 
         if (page_load == 0) {
             var load_timestamp = Date.now()
-            jQuery('#page_load').val(load_timestamp);
+            jQuery('#page_load').val(String(load_timestamp));
         }
 
         if (reverse == 1) {

@@ -231,7 +231,7 @@
         AClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            jQuery('#page_submit').val(submit_timestamp);
+            jQuery('#page_submit').val(String(submit_timestamp));
             console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("A");
@@ -243,7 +243,7 @@
         BClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            jQuery('#page_submit').val(submit_timestamp);
+            jQuery('#page_submit').val(String(submit_timestamp));
             console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("B");
@@ -341,7 +341,7 @@
 
         if (page_load == 0) {
             var load_timestamp = Date.now()
-            jQuery('#page_load').val(load_timestamp);
+            jQuery('#page_load').val(String(load_timestamp));
         }
 
         if ( outcomeOneTop == "True"){
