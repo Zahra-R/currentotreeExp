@@ -89,6 +89,7 @@ PARTICIPANT_FIELDS = [
     'randomMisinfoArray', 
     'reverseBoxes',
     'seenMisinfo',
+    'telling_box_label',
 
     ### FINANCIAL DECISION MAKING
     'shuffledOrderC',

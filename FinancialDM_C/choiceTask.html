@@ -169,9 +169,10 @@
 
 <input id="page_load" type="hidden" name="page_load" value={{player.page_load}} />
 <input id="page_submit" type="hidden" name="page_submit" />
-
+<input id="newResponseTime" type="hidden" name="newResponseTime" />
 
 {{ formfield_errors 'page_load' }}
+{{ formfield_errors 'newResponseTime' }}
 {{ formfield_errors 'page_submit' }}
 {{ formfield_errors 'choice' }}
 {{ formfield_errors 'input_keyboard' }}
@@ -212,6 +213,8 @@
         AClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
+            var load_timestamp =  jQuery('#page_load').val();
+            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
             console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
@@ -224,6 +227,8 @@
         BClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
+            var load_timestamp =  jQuery('#page_load').val();
+            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
             console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');

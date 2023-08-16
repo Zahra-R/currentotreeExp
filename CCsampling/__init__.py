@@ -28,11 +28,13 @@ class Player(BasePlayer):
     range_likelyTrue = models.IntegerField( min=-100, max=100)
     range_ccconcern = models.IntegerField( min=-100, max=100)
     statementText =models.StringField()
-    statementID =models.StringField()
+    statementID = models.StringField()
     boxlikingInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='How much do you like Box<b> A</b>?', widget = widgets.RadioSelect )
-    boxrecommendationInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box A if it were its own social media channel?',widget=widgets.RadioSelect )
+    boxrecommendationInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box A if it were its own social media channel?',widget = widgets.RadioSelect )
     boxlikingMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='How much do you like Box B?' , widget = widgets.RadioSelect)
-    boxrecommendationMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box B if it were its own social media channel?',widget=widgets.RadioSelect )
+    boxrecommendationMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box B if it were its own social media channel?',widget = widgets.RadioSelect )
+    reverseBoxes = models.BooleanField()
+    tellingBoxLabels = models.BooleanField()
    
 
 
@@ -69,6 +71,11 @@ def allocateBoxNames(player: Player):
     print('in make choice again')
 
 
+def saveParticipantVarsToPlayer(player: Player): 
+    player.reverseBoxes = player.participant.reverseBoxes
+    player.tellingBoxLabels = player.participant.telling_box_label
+
+
 # ---------------------------------------------------------------
 # ------------------- PAGES--------------------------------------
 #----------------------------------------------------------------
@@ -94,7 +101,8 @@ class sampling(Page):
             'randomMisinfo': player.participant.randomMisinfoArray[round_number-1],
             'reverseBoxes': player.participant.reverseBoxes,
             'MisinfoText': MisinfoText,
-            'InfoText': InfoText
+            'InfoText': InfoText, 
+            'tellingBoxNames': player.participant.telling_box_label
         }
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
@@ -131,6 +139,8 @@ class boxrating(Page):
     def before_next_page(player: Player, timeout_happened):
         print('in before next page function', player.boxlikingInfo, player.boxlikingMisinfo, player.boxrecommendationInfo, player.boxrecommendationMisinfo )
         allocateBoxNames(player)
+        if (player.round_number % C.NUM_ROUNDS == 0):
+            saveParticipantVarsToPlayer(player)
 
 
 page_sequence = [

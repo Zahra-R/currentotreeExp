@@ -39,7 +39,7 @@
             <tr>
                 <td class="rangelabel" style="width:20%"> very unlikely  </td>
                 <td style="width:60%">
-                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider untouched"
                         id="range_likelyTrue" name="range_likelyTrue" >
                 </td>
                 <td class="rangelabel" style="width:20%"> very likely   </td>
@@ -53,7 +53,7 @@
             <tr>
                 <td  class="rangelabel"  style="width:20%"> not at all  </td>
                 <td style="width:60%">
-                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider untouched"
                         id="range_agree" name="range_agree" >
                 </td>
                 <td class="rangelabel" style="width:20%"> very much  </td>
@@ -67,7 +67,7 @@
             <tr>
                 <td class="rangelabel" style="width:20%"> not at all  </td>
                 <td style="width:60%">
-                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider"
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider untouched"
                         id="range_ccconcern" name="range_ccconcern" >
                 </td>
                 <td class="rangelabel" style="width:20%"> very much  </td>
@@ -106,6 +106,8 @@
 <script> 
 var statement
 var reverse = "{{reverseBoxes}}"
+var tellingLabel = "{{tellingBoxNames}}"
+var countSliderChange = 0 
 
 enablebtn = function () {
         document.getElementById("bbtn").disabled = false;
@@ -134,11 +136,38 @@ function getCookie(cname) {
     return "";
 }
 
+function onSliderChange(event) {
+    if($(event.target).hasClass('untouched')){
+            $(event.target).removeClass('untouched')
+            countSliderChange += 1
+            if(countSliderChange == 3){
+                document.getElementById("nextst").disabled = false;
+            }   
+        }
+}
+
 $(document).ready(function () {
     if (reverse == "True") {
         $('#abtn')[0].value = "m"
         $('#bbtn')[0].value = "i"
+        if (tellingLabel == "True") {
+            $('#abtn span').html("Box A: Critical")
+            $('#bbtn span').html("Box B: Alarming")
+        }
+    } else {
+        if (tellingLabel == "True") {
+            $('#bbtn span').html("Box B: Critical")
+            $('#abtn span').html("Box A: Alarming")
+        }
     }
+
+
+    $('#range_likelyTrue').on('input', onSliderChange )
+    $('#range_agree').on('input', onSliderChange )
+    $('#range_ccconcern').on('input', onSliderChange )
+   
+
+    
 })
 
 
@@ -167,7 +196,7 @@ statement = {
             $('#' + boxname).addClass('transform-active-frame')
             setTimeout(function () {$('#' + boxname).addClass('transform-active')}, 20);
             $('#rate_statement').css("display", "revert")
-            setTimeout(function () { $('#rate_statement').addClass('transform-slidervisible')}, 20);
+            setTimeout(function () { $('#rate_statement').addClass('transform-slidervisible')}, 2000);
             $('#caption1').html("")
             $('#caption2').html("Plase read the statement and answer the questions.")
 
@@ -176,7 +205,7 @@ statement = {
             forminputs.statementID.value = roundTextID
             document.getElementById("bbtn").disabled = true;
             document.getElementById("abtn").disabled = true;
-            setTimeout(function () { document.getElementById("nextst").disabled = false;}, 2000);
+            //setTimeout(function () { document.getElementById("nextst").disabled = false;}, 3000);
     }
 }
 

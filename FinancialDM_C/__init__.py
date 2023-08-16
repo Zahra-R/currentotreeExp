@@ -19,7 +19,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'safechoice'
     PLAYERS_PER_GROUP = None
     QUESTIONS_C = read_csv()
-    NUM_ROUNDS = 5 # len(QUESTIONS_C)
+    NUM_ROUNDS =  len(QUESTIONS_C)
 
 
 class Subsession(BaseSubsession):
@@ -58,6 +58,8 @@ class Player(BasePlayer):
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
     reverse = models.IntegerField()
+    newResponseTime = models.FloatField()
+    diff_measure = models.FloatField()
     # @property
     # def response_time(player):
     #     if player.page_submit != None:
@@ -66,7 +68,7 @@ class Player(BasePlayer):
         
 class choiceTask(Page):
     form_model = 'player'
-    form_fields = ["choice","input_keyboard", "page_load", "page_submit"]
+    form_fields = ["choice","input_keyboard", "page_load", "page_submit", "newResponseTime"]
     @staticmethod
     def vars_for_template(player: Player):
         return {
@@ -75,8 +77,10 @@ class choiceTask(Page):
         }
     @staticmethod
     def before_next_page(player, timeout_happened):
+        print("made it till here")
         if player.page_submit != None:
             player.responsetime = int(player.page_submit) - int(player.page_load)
+            player.diff_measure = player.responsetime - player.newResponseTime
 
 class Results(Page):
     @staticmethod

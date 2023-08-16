@@ -144,9 +144,9 @@ class Conclude2(Page):
 
 
 page_sequence = [
-   # Demographics,
-   # CCConcern,
-   # Pol_Att,
+    Demographics,
+    CCConcern,
+    Pol_Att,
     End,
     Conclude2
 ]

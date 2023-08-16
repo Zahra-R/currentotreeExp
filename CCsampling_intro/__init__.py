@@ -26,6 +26,17 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 
+
+
+def creating_session(subsession:Subsession):
+    import itertools
+    box_labels = itertools.cycle([True, True, False, False])
+    for player in subsession.get_players():
+        if subsession.round_number == 1: 
+            player.participant.telling_box_label = next(box_labels)
+
+
+
 #PLAYER FUNCTION 
 class Player(BasePlayer):
     dataScience = models.BooleanField(initial=False)
