@@ -20,13 +20,13 @@
             <div class="" style="padding-bottom:20px;">
                 <!-- Please choose one of the options. /your preferred option  edit text  -->
                 {% if game_round > 5 %} 
-                <p> Please choose one of the options.</p> <span class="Exp_Con"><p>While this is just a rough estimate, <b>you can think about {{carbonB}} lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b> </p> </span>
+                <p> Please choose one of the options.</p> <span class="Exp_Con"><p>While this is just a rough estimate, <b>you can think about 30 lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b> </p> </span>
                 {%else%}
                 <p> Please choose one of the options.</p>  
-                <p> If you choose Option A, you will <b> gain {{ C.safe_outcome }} points.</b> <span class="Exp_Con"> Option A emits {{C.carbonA}} lbs of CO2 equivalents.  </span> </p> 
-                <p> If you choose Option B, you will have a 90% chance to <b>gain {{ C.high_lottery }} points</b> and a 10% chance to <b>lose {{ C.low_lottery }} points.</b>  <span class="Exp_Con"> Option B emits {{carbonB}} lbs of CO2 equivalents. </span> </p> <b> <p> <span class="Exp_Con"> While this is just a rough estimate, you can think about {{carbonB}} lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b> </span> </p>
+                <p> If you choose Option A, <span id="description-A"> you will <b> gain {{ C.safe_outcome }} points.</b> <span class="Exp_Con"> This option emits {{carbonA}} lbs of CO2 equivalents.  </span> </span></p> 
+                <p> If you choose Option B,  <span id="description-B">you will have a 90% chance to <b>gain {{ C.high_lottery }} points</b> and a 10% chance to <b>lose {{ C.low_lottery }} points.</b>  <span class="Exp_Con"> This option emits {{carbonB}} lbs of CO2 equivalents.</span> </span> </p> <b> <p> <span class="Exp_Con"> While this is just a rough estimate, you can think about {{carbonB}} lbs CO2 as being equivalent to travelling {{carbonMiles | to0}} miles in an average passenger car.</b> </span> </p>
                     {% if game_round == 1 %} 
-                        {% if Exp_Con == 3 %} 
+                        {% if Salience == False %} 
                         <p> Please bear in mind that Option B entails carbon emissions ({{carbonB}} lbs CO2, which is around {{carbonMiles | to0}} miles in an average passenger car). No emissions will be caused by Option A. You will not be reminded about the carbon emissions in the following rounds, but we will realize the emissions following your choice of a randomly drawn round at the end of the study.</p>
                         {% endif %}
                     {% endif %}
@@ -37,10 +37,10 @@
                     <tr style="font-weight: bold;"> <th> </th> <td> Option A </td> <td> Option B </td></tr>
                     
                     <tr>
-                        <th> Payoff</th> <td> Get <span class="point_span">{{ C.safe_outcome }}</span> points for sure</td> <td>   <span > Get <span class="point_span">{{ C.high_lottery }}</span> points with <span class="point_span">90%</span> probability </span> <br>  <span> Get <span class="point_span">{{ C.low_lottery }}</span> points with <span class="point_span">10%</span> probability </span> </td>
+                        <th> Payoff</th> <td id = "left-payoff"> Get <span class="point_span">{{ C.safe_outcome }}</span> points for sure</td> <td id = "right-payoff">   <span > Get <span class="point_span">{{ C.high_lottery }}</span> points with <span class="point_span">90%</span> probability </span> <br>  <span> Get <span class="point_span">{{ C.low_lottery }}</span> points with <span class="point_span">10%</span> probability </span> </td>
                     </tr>
                     <tr class="Exp_Con" style="border-color: white;">
-                        <th  > Emissions</th> <td> Emit <span class="point_span">{{C.carbonA}}</span> lbs CO2 </td> <td> Emit <span class="point_span">{{carbonB}}</span> lbs CO2</td> 
+                        <th  > Emissions</th> <td id = "left-emissions"> Emit <span class="point_span">{{carbonA}}</span> lbs CO2 </td> <td id = "right-emissions"> Emit <span class="point_span">{{carbonB}}</span> lbs CO2</td> 
                     </tr>
                         
 
@@ -69,9 +69,9 @@
 
 {% endblock %}
 
-{% block scripts %}
-<script>
-    Exp_Con = "{{Exp_Con}}"
+{% block scripts %}<script>
+    Salience = "{{Salience}}"
+    reverseSides = "{{reversedSides}}"
     num_choices = "{{ C.NUM_ROUNDS }}";
     lottery_a_hi = "{{ C.high_lottery }}";
     lottery_a_lo = "{{ C.low_lottery }}";
@@ -79,25 +79,60 @@
     lottery_b_lo = "{{ C.safe_outcome }}";
 
     enablebtn = function () {
-                document.getElementById("bbtn").disabled = false;
-                document.getElementById("abtn").disabled = false;
-                //document.getElementById("outcometable").style.display = "inline"
-                //document.getElementById("outcometable").setAttribute("style", "margin-left: auto; margin-right: auto;  ");
-                // document.getElementById("outcomesrow").setAttribute("style", "color: white;");
-                // document.getElementById("tabletitle").setAttribute("style", "color: white;");
-                // document.getElementById("chosenarrow").setAttribute("style", "color: white;");
+        document.getElementById("bbtn").disabled = false;
+        document.getElementById("abtn").disabled = false;
+        //document.getElementById("outcometable").style.display = "inline"
+        //document.getElementById("outcometable").setAttribute("style", "margin-left: auto; margin-right: auto;  ");
+        // document.getElementById("outcomesrow").setAttribute("style", "color: white;");
+        // document.getElementById("tabletitle").setAttribute("style", "color: white;");
+        // document.getElementById("chosenarrow").setAttribute("style", "color: white;");
 
-            }
+    }
 
-            activate_Exp_Con = function(){
-                if(Exp_Con == 2) {
-                    $('.Exp_Con').css("display", "revert")
-                }
-            }
-            window.onload = function () {
-                activate_Exp_Con();
-                setTimeout(function () { enablebtn() }, 1000);
-            }
+    switchSides = function () {
+        if (reverseSides == "True") {
+            div1 = $('#left-payoff');
+            div2 = $('#right-payoff');
+
+            tdiv1 = div1.clone();
+            tdiv2 = div2.clone();
+
+            div1.replaceWith(tdiv2);
+            div2.replaceWith(tdiv1);
+
+            div3 = $('#left-emissions');
+            div4 = $('#right-emissions');
+
+            tdiv3 = div3.clone();
+            tdiv4 = div4.clone();
+
+            div3.replaceWith(tdiv4);
+            div4.replaceWith(tdiv3);
+
+            div5 = $('#description-A');
+            div6 = $('#description-B');
+
+            tdiv5 = div5.clone();
+            tdiv6 = div6.clone();
+
+            div5.replaceWith(tdiv6);
+            div6.replaceWith(tdiv5);
+        
+        }
+    }
+
+    activate_EmissionsRow = function () {
+        if (Salience == "True") {
+            $('.Exp_Con').css("display", "revert")
+        }
+    }
+
+    window.onload = function () {
+        activate_EmissionsRow();
+        switchSides()
+       
+        setTimeout(function () { enablebtn() }, 1000);
+    }
 </script>
 
 

@@ -27,8 +27,9 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
-    Exp_Con = models.IntegerField()  # This is a between subjects variable, counterbalance of the conditions. 1 is control, 2 is salient experimental, 3 is decay experimental
-    outcomeCarbon = models.IntegerField(initial=0)
+    Exp_Con = models.IntegerField()  # This is a between subjects variable, 1 is first block safe is neutral, 2 is first block safe is carbon negative
+    SwitchPayoffs = models.BooleanField()
+    Salience = models.BooleanField()
     reversedbuttons = models.BooleanField()
     dataScience = models.BooleanField(initial=False)
     dataTeach = models.BooleanField(initial=False)
@@ -49,29 +50,36 @@ class Player(BasePlayer):
 
 def creating_session(subsession: Subsession):
     import itertools
-    conditions = itertools.cycle([1, 2, 2, 3, 3])
+    conditions = itertools.cycle([1, 2])
     reverse_display = itertools.cycle([True, False, False, True])
-    amount_carbon = itertools.cycle([11, 55])
+    salientEmissions = itertools.cycle([True, True, False, False])
+    blockswitchPayoffs = itertools.cycle([True, True, True, True, False, False, False, False])
     # randomize to treatments
     for player in subsession.get_players():
         if subsession.round_number == 1:
             if 'Exp_Con' in player.session.config:
                 player.Exp_Con = player.session.config['Exp_Con']
             else:
-                player.Exp_Con = next(conditions) # 1 is control, 2 is experimental salient, 3 is experimental with decay
+                player.Exp_Con = next(conditions)
+            if 'Salience' in player.session.config:
+                player.Salience = player.session.config['Salience']
+            else:
+                player.Salience = next(salientEmissions)
+            if 'SwitchPayoffs' in player.session.config:
+                player.SwitchPayoffs = player.session.config['SwitchPayoffs']
+            else:
+                player.SwitchPayoffs = next(blockswitchPayoffs)
             
             player.reversedbuttons = next(reverse_display)
 
             player.participant.Exp_Con=player.Exp_Con
-            player.participant.reversedbuttons=player.reversedbuttons
-            if player.participant.Exp_Con > 1:
-                player.outcomeCarbon = next(amount_carbon)
-            player.participant.outcomeCarbon = player.outcomeCarbon
+            player.participant.reversedbuttons= player.reversedbuttons
+            player.participant.Salience = player.Salience
+            player.participant.SwitchPayoffs = player.SwitchPayoffs
 
 
 
 def make_choice(player: Player, choiceMade):
-    Exp_Con = player.participant.Exp_Con
     reversedbuttons = player.participant.reversedbuttons
     # if player.round_number % C.ROUNDS_PER_CONDITION == 0:
     player.preference = choiceMade
@@ -95,7 +103,7 @@ class Consent(Page):
         player.prolificIDMissing = player.participant.label == None
         return {
             "particpantlabel": player.participant.label,
-            "nolabel": player.participant.label == None
+            "nolabel": False # player.participant.label == None
             }
     
 
@@ -165,12 +173,12 @@ class Preview_Game(Page):
     @staticmethod
     def vars_for_template(player: Player):
         Exp_Con = player.in_round(1).Exp_Con
-        outcomeCarbon = player.participant.outcomeCarbon
+        outcomeCarbon = 30 # player.participant.outcomeCarbon
         carbonMiles = outcomeCarbon * 20/11
         return {
             'num_rounds': player.participant.game_rounds,
             'Exp_Con': Exp_Con,
-            'outcomeCarbon': outcomeCarbon ,
+            'outcomeCarbon': outcomeCarbon,
             'carbonMiles': carbonMiles
             }
 
@@ -186,7 +194,7 @@ class Preview_Game_R(Page):
     @staticmethod
     def vars_for_template(player: Player):
         Exp_Con = player.in_round(1).Exp_Con
-        outcomeCarbon = player.participant.outcomeCarbon
+        outcomeCarbon = 30 # player.participant.outcomeCarbon
         carbonMiles = outcomeCarbon * 20/11
         return {
             'num_rounds': player.participant.game_rounds,
@@ -216,6 +224,8 @@ class NoA2(Page):
 
     @staticmethod
     def is_displayed(player: Player):
+        if 1 == 1: ### remove this and subsequent line
+            return False 
         if player.in_round(1).Exp_Con == 1: 
             return False
         if player.participant.reversedbuttons == True:
@@ -257,7 +267,7 @@ class Preview_Game2(Page):
     def vars_for_template(player: Player):
         Exp_Con = player.participant.Exp_Con
         reversedbuttons = player.participant.reversedbuttons
-        outcomeCarbon = player.participant.outcomeCarbon
+        outcomeCarbon = 30 #player.participant.outcomeCarbon
         carbonMiles = outcomeCarbon * 20/11
         return {
                 #'game': game,
@@ -281,7 +291,7 @@ class Preview_GameR2(Page):
     def vars_for_template(player: Player):
         Exp_Con = player.participant.Exp_Con
         reversedbuttons = player.participant.reversedbuttons
-        outcomeCarbon = player.participant.outcomeCarbon
+        outcomeCarbon = 30 # player.participant.outcomeCarbon
         carbonMiles = outcomeCarbon * 20/11
         return {
                 #'game': game,
@@ -314,15 +324,15 @@ class before_Games(Page):
 
 page_sequence = [
     Consent,
-    Intro_1,
-    Intro_2,
-    Intro_3,
-    NotAtt, 
-    Preview_Game_R, 
-    Preview_Game,
-    NoA2,
-    NoA2_R,
-    Preview_GameR2, 
-    Preview_Game2,
-    before_Games
+    #Intro_1,
+    #Intro_2,
+    # Intro_3,
+    # NotAtt, 
+    # Preview_Game_R, 
+    # Preview_Game,
+    # NoA2,
+    # NoA2_R,
+    # Preview_GameR2, 
+    # Preview_Game2,
+    # before_Games
 ]

@@ -18,10 +18,12 @@ SESSION_CONFIGS = [
     ),
 
     dict(
-        name='EDEG_study2_EmissionsSalient',
+        name='EDEG_study2_Salient_PayoffSwitches_SafeEmitsFirst',
         app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
         num_demo_participants=5,
-        Exp_Con=2
+        Exp_Con=2,
+        Salience= True,
+        PayoffSwitches = True
     ),
     dict(
         name='DEG_study2_EmissionsDecay',
@@ -73,7 +75,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 PARTICIPANT_FIELDS = [
     # EDEG FIELDS
     'Exp_Con',
-    'outcomeCarbon',
+    'Salience',
     'reversedbuttons',
     'outcomeA',
     'outcomeB',
@@ -83,6 +85,7 @@ PARTICIPANT_FIELDS = [
     'payoff_decimal',
     'game_rounds', 
     'finished',
+    'SwitchPayoffs',
 
     #CC SAMPLING FIELDS
     'randomInfoArray',
