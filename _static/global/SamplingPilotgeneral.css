@@ -1,3 +1,12 @@
+
+.otree-body{
+  max-width: 950px;
+  font-size: 1.1rem;
+  text-align: justify;
+  margin-left:auto;
+  margin-right:auto;
+}
+
 .choiceButton {
     height: 15vh;
     max-height: 140pt;

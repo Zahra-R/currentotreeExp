@@ -76,6 +76,8 @@ class Player(BasePlayer):
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
     reverse = models.IntegerField()
+    carbonLeft = models.BooleanField()
+    outcomeOneTop = models.BooleanField()
     @property
     def response_time(player):
         if player.page_submit != None:
@@ -89,6 +91,8 @@ class choiceTask(Page):
     form_fields = ["choice","input_keyboard", "page_load", "page_submit"]
     @staticmethod
     def vars_for_template(player: Player):
+        player.carbonLeft = player.participant.carbonLeft
+        player.outcomeOneTop = player.participant.outcomeOneTop
         return {
             'reverse': player.reverse,
             'carbonLeft': player.participant.carbonLeft,

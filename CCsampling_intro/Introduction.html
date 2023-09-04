@@ -3,21 +3,70 @@ Information about this study
 {% endblock %}
 
 {% block styles %}
-    <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+<link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
 {% endblock %}
 
 
 
 {% block content %}
-<body>
-    <h3> These are the instructions</h3>
 
-    <p> Please read the instructions carefully. Because you should really read the instructions. </p>
+<body>
+
+    <p> On the next pages, you will find two boxes. Each box contains a number of statements about climate change coming
+        from different sources. </p>
+    <p>
+        When you click on one of the boxes, one statement will be randomly drawn from that box. Your task will be to
+        read the statement and rate what you think about the statement. You will repeat this for <i>15 rounds</i>. In
+        each round, you can decide from which box you want to receive the new statement.
+    </p>
+    <p> Similar to media analytics for online content, we are interested which box receives more attention and what you
+        think
+        about the statements.
+
+        Please take your time to read each statement carefully and give your honest opinion.
+    </p>
+
+
+    <h4> Version 2 for Alarmed/Concerned Condition</h4>
+
+
+    <p> On the next pages, you will find two boxes. Each box contains a number of statements about climate change.
+        <b>One box contains more alarmed statements while the other has more critical statements about climate change.</b>
+    </p>
+    <p>
+        When you click on one of the boxes, one statement will be randomly drawn from that box. Your task will be to
+        read the statement and rate what you think about the statement. You will repeat this for <i>15 rounds</i>. In
+        each round, you can decide from which box you want to receive the new statement.
+    </p>
+    <p> Similar to media analytics for online content, we are interested which box receives more attention and what you
+        think
+        about the statements.
+
+        Please take your time to read each statement carefully and give your honest opinion.
+    </p>
+   
 </body>
 
 
-<div style="max-width: 750px;">
-    <button id="nextst"  style=" margin-top: 4vh;" class="otree-btn-next btn btn-primary">Next</button>
+<div >
+    <button id="nextst" style=" margin-top: 4vh;" disabled class="otree-btn-next btn btn-primary">Next</button>
 
- </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+
+    enablebtn = function () {
+        document.getElementById("nextst").disabled = false;
+    }
+
+
+
+    window.onload = function () {
+        setTimeout(function () { enablebtn() }, 3 * 1000);
+    }
+</script>
 {% endblock %}
