@@ -38,7 +38,7 @@ def creating_session(subsession: Subsession):
         player.carbonA = int(current_question['coA'])
         player.carbonB = int(current_question['coB'])
         player.stimulusID = int(current_question['sid'])
-        player.reverse = random_draw([0, 1])
+        player.OptionARight = random_draw([0, 1])
 
 
 class Group(BaseGroup):
@@ -57,7 +57,7 @@ class Player(BasePlayer):
     page_submit = models.StringField(null=True)
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
-    reverse = models.IntegerField()
+    OptionARight = models.IntegerField()
     newResponseTime = models.FloatField()
     carbonLeft = models.BooleanField()
     # @property
@@ -73,7 +73,7 @@ class choiceTask(Page):
     def vars_for_template(player: Player):
         player.carbonLeft = player.participant.carbonLeft
         return {
-            'reverse': player.reverse,
+            'reverse': player.OptionARight,
             'carbonLeft': player.participant.carbonLeft
         }
     @staticmethod

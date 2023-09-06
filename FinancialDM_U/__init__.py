@@ -12,6 +12,7 @@ Read quiz quest
 def read_csv():
     f = open(__name__ + '/stimuliU.csv', encoding='utf-8-sig')
     rows = list(csv.DictReader(f))
+    print("new print with rows")
     return rows
 
 
@@ -48,7 +49,7 @@ def creating_session(subsession: Subsession):
         player.probB2 = 100 - (100* float(current_question['pB1']))
         
         player.stimulusID = int(current_question['sid'])
-        player.reverse = random_draw([0, 1])
+        player.OptionARight = random_draw([0, 1])
 
 
 class Group(BaseGroup):
@@ -75,7 +76,7 @@ class Player(BasePlayer):
     page_submit = models.StringField(null=True, initial = "a")
     responsetime = models.IntegerField()
     stimulusID = models.IntegerField()
-    reverse = models.IntegerField()
+    OptionARight = models.IntegerField()
     carbonLeft = models.BooleanField()
     outcomeOneTop = models.BooleanField()
     @property
@@ -94,7 +95,7 @@ class choiceTask(Page):
         player.carbonLeft = player.participant.carbonLeft
         player.outcomeOneTop = player.participant.outcomeOneTop
         return {
-            'reverse': player.reverse,
+            'reverse': player.OptionARight,
             'carbonLeft': player.participant.carbonLeft,
             'outcomeOneTop': player.participant.outcomeOneTop
         }
