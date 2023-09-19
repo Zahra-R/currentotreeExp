@@ -1,0 +1,122 @@
+{{ block title }}task{{ endblock }}
+{{ block content }}
+
+<style>
+    /* Adjust spacing between sentences */
+    .sentence {
+        margin: 0;
+        /* Adjust this value to control spacing between sentences */
+        padding: 0;
+        /* Optionally adjust padding if needed */
+        line-height: 0.5;
+    }
+    .question {
+        margin: 0;
+        /* Adjust this value to control spacing between sentences */
+        padding: 0;
+        /* Optionally adjust padding if needed */
+        line-height: 0.5;
+        size: 17
+    }
+
+    td {
+        padding:10px;
+    }
+
+    table, th, tr{
+        border: 1px solid;
+        border-left: none;
+        border-right: none;
+    }
+
+
+    td.image {
+        width: 100px;
+    }
+
+    td.type {
+        width: 100px;
+    }
+
+    /* .image {
+        width: 125px;
+    } */
+</style>
+
+<div class=".question">
+    <p>
+        How climate friendly do you think this footprint is? <br>
+        <br>
+    </p>
+</div>
+
+
+
+<table id="currentFootprintTable">
+</table>
+
+{{ formfields }}
+
+{{ next_button }}
+
+
+{{ endblock}}
+
+{% block scripts %}
+<script>
+    var currentBehaviors = "{{current_footprint_table}}"
+    currentBehaviors = eval(currentBehaviors)
+
+    var currentImages = "{{current_footprint_table_images}}"
+    currentImages = eval(currentImages)
+
+    var behaviorTypes = ["Diet", "Heating", "Recycling", "Food", "Commute", "Vacation"]
+    var random_behavior_order = '{{random_behavior_order}}'
+    random_behavior_order = eval(random_behavior_order)
+    var behaviorTypesDict = {}
+    
+    random_behavior_order.forEach((random_behavior_order, i) => behaviorTypesDict[random_behavior_order] = behaviorTypes[i]);
+    console.log(behaviorTypesDict)
+
+
+    fillTable = function () {
+        console.log("hello istarted")
+        for (let i = 0; i < currentBehaviors.length & i <currentImages.length ; i++) {
+            thisCurrType = behaviorTypes[random_behavior_order[i]]
+            thisCurrBeh = currentBehaviors[i]
+            thisCurrImg = currentImages[i]
+            var mytable = document.getElementById("currentFootprintTable");
+
+            // Create an empty <tr> element and add it to the 1st position of the table:
+            var row = mytable.insertRow(-1);
+
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            // Add some text to the new cells:
+            cell1.innerHTML = thisCurrType;
+            cell1.classList.add("type")
+            cell2.innerHTML = thisCurrBeh;
+            cell2.classList.add("behavior")
+            imgString = `<img  style="width:55%; "  src=/static/global/images/` + thisCurrImg + `.png>`
+            cell3.innerHTML =  imgString
+            cell3.classList.add("image")
+
+
+        }
+    }
+
+
+
+
+
+    window.onload = function () {
+
+        fillTable()
+
+
+    }
+</script>
+{{ endblock }}

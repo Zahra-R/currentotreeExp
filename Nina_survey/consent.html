@@ -1,0 +1,51 @@
+
+<div class="card bg-light m-3">
+    <div class="card-body">
+
+    <h3>
+        Consent
+    </h3>
+    <p>
+       Please read the following information carefully.<br>
+       Your answers will be treated <b>anonymously</b> and <b>confidentially</b>. <br>
+ 
+       <b>Research objective:</b> Our project is concerned with better understanding individuals' perceptions of carbon footprints.<br>
+       <b>Procedure of the study:</b> You will answer some demographic and general questions and complete an experimental task with multiple rounds.
+        Afterwards you will indicate some attitudes and behaviors you have and show in regards to the environment. <br>
+       <b>Duration and compensation:</b> You will need about 8-10 minutes to complete the study. <br>
+       You will be compensated after participation in accordance with Prolific's typical procedures. <br>
+       <b>Risks and benefits:</b> Participation in this study does not create any risk beyond the risks of everyday life. By participating in this study, you will have the opportunity to learn more about sustainable behavior. In addition, the results of this study will help us in our understanding of sustainable behavior. <br>
+       <b>Voluntary participation:</b> Participation in this study is voluntary. You can choose not to participate or to leave the study at any time.<br>
+    
+       <b>Based on the information presented above, I confirm that I wish to take part in this study and I authorize: </b> <br>
+       
+       <table>
+        <tr>
+            <td> <input name="dataScience" id="id_dataScience" type="checkbox" class="larger" onchange="checkNext()" /> </td>
+            <td> The use of the data for scientific purposes, and the publication of
+                the results of the study in scientific journals or books, given that the data will be anonymous and that no
+                information about my identity will be disclosed.</td>
+        </tr>
+        <tr>
+            <td><input name="dataTeach" id="id_dataTeach" type="checkbox" class="larger" onchange="checkNext()" /> </td>
+            <td> The use of the data for teaching purposes (courses and lectures for
+                students and professionals subject to professional confidentiality).</td>
+        </tr>
+    </table>
+
+    </p>
+    
+</div>
+</div>
+
+<script>
+    function checkNext() {
+        if ($("#id_dataScience")[0].checked && $("#id_dataTeach")[0].checked) {
+            $("#consent-next").attr("disabled", false)
+        } else {
+            $("#consent-next").attr("disabled", true)
+        }
+    }
+
+
+</script>

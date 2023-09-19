@@ -60,6 +60,12 @@ SESSION_CONFIGS = [
         certainFirst = False
     ),
 
+     dict(
+         name='carbontask',
+         app_sequence=['Nina_survey', 'Nina_carbontask',  'Nina_questionnaire', 'Nina_footprint_calculator'],
+         num_demo_participants=10,
+     ),
+
 
 ]
 
@@ -98,7 +104,10 @@ PARTICIPANT_FIELDS = [
     'shuffledOrderC',
     'shuffledOrderU',
     'carbonLeft', 
-    'outcomeOneTop'
+    'outcomeOneTop',
+
+    ### CarbonTask Nina
+    'task_rounds'
 
 ]
 

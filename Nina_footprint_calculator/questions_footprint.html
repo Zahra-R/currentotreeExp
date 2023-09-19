@@ -1,0 +1,29 @@
+{{ block title }}footprint_calculator{{ endblock }}
+{{ block content }}
+
+<style>
+    /* Adjust spacing between sentences */
+.sentence {
+    margin: 0;  /* Adjust this value to control spacing between sentences */
+    padding: 0; /* Optionally adjust padding if needed */
+    line-height: 1.5;
+    }
+</style>
+
+<div class="sentence">
+<p>
+    In this questionnaire, we are collecting information about people,s consumer behavior. <br>
+    Our goal is to assess the validity of existing questionnaires in order to help NGOs improve their research. <br>
+    Please answer as accurately as possible. Thank you in advance! <br>
+    <br>
+
+</p>
+</div>
+
+<table class="table">
+    {{ formfields }}
+</table>
+
+
+{{ next_button }}
+{{ endblock }}
