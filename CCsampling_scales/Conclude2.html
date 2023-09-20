@@ -1,6 +1,7 @@
 
 {% block styles %}
     <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" >
 {% endblock %}
 
 {% block title %}
@@ -12,16 +13,39 @@
 
 
 <div >
-    <img style="width:50%; max-width:200px;" src="{{ static 'global/images/no_mobile.jpeg'}}">
  <p>
-    You have read 12 statements regarding the climate change. Not all statements were necessarily true. 
-    By true, we mean that they convey scientific facts that are endorsed by the scientific community, as well as the larger public. 
+    You have read 15 statements regarding the climate change. 
+ </p>
+ <p>  All these statements were posted publicly on social media. 
+     However, some of the statements contained misleading or even false information about climate change. 
+</p> 
 
-    The following statements you have read were misleading. Here you can read the corrected version. 
+<p>
+    Please remember that, regardless of the posts you have read, <b>more than 97% of climate scientists agree that climate change is real</b> and it is caused by human greenhouse gas emissions.  The IPCC report, the most comprehensive body of climate change evidence with authors from all over the world, concludes that “It is unequivocal that human influence has warmed the atmosphere, ocean and land. 
+    Widespread and rapid changes in the atmosphere, ocean, cryosphere and biosphere have already occurred." The report <b>strongly urges to implement adequate actions to avoid dire consequences on global living conditions.</b>
+</p>
+    
+<p>
+    On the other hand, some people and institutions have vested interests to avoid climate action. Fossil fuel companies, for instance, have invested billions of dollars in communication that opposes climate action.
+
+    Below, you find all statements that you have read during this study that were <i>misleading</i>. By "misleading", we mean that they do not correspond to the best scienitific evidence available or that they present information in a distorted or biased light. 
+    We have created counterstatements that are based on scientific publications and official sources (e.g., government approved sources).
+</p>
+
+<p>
+    You can read more about climate myths and how they can be debunked here: 
+</p>
+<p>
+    You can read more about the physical details of climate change and climate science here: 
+</p>
+    Here, you can find the latest IPCC report. 
+    
+    
  </p>   
 
- <table id="debriefTable">
-    <tr> <th> Misleading Statement</th> <th>Corrected Statement</th> </tr>
+ <p> If you have any questions or concerns you can contact zahra.rahmani@unibas.ch</p>
+
+ <table id="debriefTable" class="stripe hover row-border">
  </table>
   
 </div>
@@ -34,6 +58,10 @@
 {% endblock %}
 
 {% block scripts %}
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"> </script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" > </script>
+
 
 <script>
 
@@ -50,7 +78,9 @@
 fillTable = function(){
     for (let i = 0; i < seenM.length; i++){ 
         thisseenM = seenMstatements[i]
+        thisseenM = thisseenM.replaceAll("´", "'")
         thiscorrectedM = seenMcorrections[i]
+        thiscorrectedM = thiscorrectedM.replaceAll("´", "'")
         var mytable = document.getElementById("debriefTable");
 
         // Create an empty <tr> element and add it to the 1st position of the table:
@@ -66,7 +96,25 @@ fillTable = function(){
 
         
     }
+    
 }
+
+$(document).ready(function() {
+
+    setTimeout(function () {
+        $('#debriefTable').DataTable({
+            "columns": [
+                { "data": "Misleading", title:"Misleading Statement", width:"45%"},
+                { "data": "Corrected" , title:"Response in Line with Scientific Evidence", width:"55%"},
+
+            ], 
+            "lengthMenu": [ [2, 5, 10, -1], [2, 5, 10, "All"] ],
+            "pageLength": -1
+        });
+
+    }, 1000)
+
+} );
 
 
 

@@ -102,12 +102,15 @@
   <!-- Compiled and minified JavaScript -->  
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"> </script>
+
 
 <script> 
 var statement
 var reverse = "{{reverseBoxes}}"
 var tellingLabel = "{{tellingBoxNames}}"
 var countSliderChange = 0 
+
 
 enablebtn = function () {
         document.getElementById("bbtn").disabled = false;
@@ -147,6 +150,8 @@ function onSliderChange(event) {
 }
 
 $(document).ready(function () {
+    //// danger remove next line
+    document.getElementById("nextst").disabled = false;
     if (reverse == "True") {
         $('#abtn')[0].value = "m"
         $('#bbtn')[0].value = "i"

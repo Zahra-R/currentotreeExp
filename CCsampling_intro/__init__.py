@@ -43,6 +43,7 @@ class Player(BasePlayer):
     dataTeach = models.BooleanField(initial=False)
     mobileDevice= models.BooleanField(initial=False, blank=True)
     prolificIDMissing= models.BooleanField(initial=False)
+    range_ccconcern = models.IntegerField( min=-100, max=100)
    
 
 
@@ -77,7 +78,13 @@ class Introduction(Page):
     
 
 
+class beforeTask(Page):
+    form_model='player'
+    form_fields = ['range_ccconcern']
+
+
 page_sequence = [
     Consent, 
-    Introduction
+    Introduction,
+    beforeTask
 ]

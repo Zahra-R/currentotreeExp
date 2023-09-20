@@ -125,9 +125,12 @@ class Conclude2(Page):
         for x in seenM:
             #string.replace(old, new, count)
             statementstring = misinfo[x]['finalStatement']
-            statementstring =statementstring.replace("'", "")
+            statementstring =statementstring.replace("'", "´")
             seenMstatements.append(statementstring)
-            seenMcorrections.append(misinfo[x]['correctedStatement'])
+            correctedstring = misinfo[x]['correctedStatement']
+            correctedstring = correctedstring.replace("'", "´")
+            seenMcorrections.append(correctedstring)
+            
         return {
             'seenM': seenM,
             'seenMstatements': seenMstatements,
@@ -144,9 +147,9 @@ class Conclude2(Page):
 
 
 page_sequence = [
-    Demographics,
-    CCConcern,
-    Pol_Att,
+    #Demographics,
+    #CCConcern,
+    #Pol_Att,
     End,
     Conclude2
 ]
