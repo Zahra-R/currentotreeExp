@@ -74,7 +74,8 @@ class choiceTask(Page):
         player.carbonLeft = player.participant.carbonLeft
         return {
             'reverse': player.OptionARight,
-            'carbonLeft': player.participant.carbonLeft
+            'carbonLeft': player.participant.carbonLeft,
+            'game_round': player.round_number
         }
     @staticmethod
     def before_next_page(player, timeout_happened):

@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+    <link href="{{ static 'global/EDEGgeneral.css'}}" rel="stylesheet">
+    <link href="{{ static 'global/css/EDEGcustom.css'}}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+The end
+{% endblock %}
+
+{% block content %}
+
+
+
+<p> You have finished the study</p>
+
+
+<p> <b> This is your payoff</b> </p>
+
+
+    <p> The randomly drawn round was {{drawn_round}}.</p>
+
+    In this round, you chose option {{relevant_round_choice}}.
+
+    With this option, your monetary bonus was {{outcome_money}}.
+
+    With this option, your carbon emissions were {{outcome_carbon}}. 
+
+
+
+
+<button style="float: right; margin-top: 2vh;" class="otree-btn-next btn btn-primary" id="consent-next">Next</button>
+{% endblock %}
+
+

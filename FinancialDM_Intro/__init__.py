@@ -20,17 +20,17 @@ class Subsession(BaseSubsession):
 def creating_session(subsession: Subsession):
     import itertools
     carbonLeftCycle = itertools.cycle([True, True,  False, False])
-    outcomeOneTopCycle = itertools.cycle([False, True, False, True])
+    certainFirstCycle = itertools.cycle([True, False])
     for player in subsession.get_players():
         if subsession.round_number == 1:
             if 'carbonLeft' in player.session.config:
                 player.participant.carbonLeft = player.session.config['carbonLeft']
             else:
                 player.participant.carbonLeft = next(carbonLeftCycle) 
-            if 'outcomeOneTop' in player.session.config:
-                player.participant.outcomeOneTop = player.session.config['outcomeOneTop']
+            if 'certainFirst' in player.session.config:
+                player.participant.certainFirst = player.session.config['certainFirst']
             else:
-                player.participant.outcomeOneTop = next(outcomeOneTopCycle)     
+                player.participant.certainFirst = next(certainFirstCycle)     
 
 
 class Group(BaseGroup):

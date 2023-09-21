@@ -43,37 +43,6 @@
     .chosen-stimulus {
         border-color: #228B22;
     }
-
-
-    table {
-        margin-left: auto;
-        margin-right: auto;
-        width: 370px;
-    }
-
-    .animated-progress {
-  width: 300px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 20px 10px;
-  border: 1px solid grey;
-  overflow: hidden;
-  position: relative;
-}
-
-#color-progress {
-  height: 100%;
-  display: block;
-  width: 0;
-  line-height: 30px;
-  position: absolute;
-  text-align: end;
-  padding-right: 5px;
-}
-
-#color-progress {
-  background-color: lightblue;
-}
 </style>
 
 {% endblock %}
@@ -82,9 +51,7 @@
 <p style="text-align: center; font-size: 0.9rem;">
     Round number {{game_round}} out of {{C.NUM_ROUNDS}} in this game.   <progress id="myprogress" max="100" ></progress>
 </p>
-<p style="font-size:200%;text-align:center;"> Please choose one of the options:</p>
-
-
+<p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options </p>
 
 <div class="container">
     <div class="row">
@@ -95,12 +62,19 @@
                 <table style="margin-top:30px;">
                     <tbody>
                         <tr id="leftsidetable" style=" font-weight: bold; background-color: grey; color: white;">
-                            <th> Carbon <br> Emissions </th>
-                            <th> Monetary <br> Bonus </th>
+                            <th> Probability </th>
+                            <th> Carbon Emissions </th>
+                            <th> Monetary Bonus </th>
                         </tr>
                         <tr>
-                            <td> {{player.carbonA}}lbs. CO2 </td>
-                            <td> £{{player.moneyA}}</td>
+                            <td> {{player.probA1 | to0 }}% </td>
+                            <td> {{player.carbonA1}}lbs. CO2 </td>
+                            <td> £{{player.moneyA1}}</td>
+                        </tr>
+                        <tr class="row-secondary-outcomeA">
+                            <td> {{player.probA2 | to0 }}% </td>
+                            <td> {{player.carbonA2}}lbs. CO2 </td>
+                            <td> £{{player.moneyA2}}</td>
                         </tr>
 
                     </tbody>
@@ -109,14 +83,19 @@
                 <table style="margin-top:30px;">
                     <tbody>
                         <tr id="leftsidetable" style=" font-weight: bold; background-color: grey; color: white;">
-                            
-                            <th> Monetary <br> Bonus </th>
-                            <th> Carbon <br> Emissions </th>
+                            <th> Probability</th>
+                            <th> Monetary Bonus </th>
+                            <th> Carbon Emissions </th>
                         </tr>
                         <tr>
-                            
-                            <td> £{{player.moneyA}}</td>
-                            <td> {{player.carbonA}}lbs. CO2 </td>
+                            <td> {{player.probA1 | to0 }}%</td>
+                            <td> £{{player.moneyA1}}</td>
+                            <td> {{player.carbonA1}}lbs. CO2 </td>
+                        </tr>
+                        <tr class="row-secondary-outcomeA">
+                            <td> {{ player.probA2 | to0 }}% </td>
+                            <td> £{{player.moneyA2}}</td>
+                            <td> {{player.carbonA2}}lbs. CO2 </td>
                         </tr>
 
                     </tbody>
@@ -135,12 +114,19 @@
                 <table style="margin-top:30px;">
                     <tbody>
                         <tr id="rightsidetable" style=" font-weight: bold; background-color: grey; color: white;">
-                            <th> Carbon <br> Emissions </th>
-                            <th> Monetary <br> Bonus </th>
+                            <th> Probability</th>
+                            <th> Carbon Emissions </th>
+                            <th> Monetary Bonus </th>
                         </tr>
                         <tr>
-                            <td> {{player.carbonB}}lbs. CO2 </td>
-                            <td> £{{player.moneyB}}</td>
+                            <td> {{player.probB1 | to0 }}%</td>
+                            <td> {{player.carbonB1}}lbs. CO2 </td>
+                            <td> £{{player.moneyB1}}</td>
+                        </tr>
+                        <tr class="row-secondary-outcomeB">
+                            <td> {{player.probB2 | to0 }}% </td>
+                            <td> {{player.carbonB2}}lbs. CO2 </td>
+                            <td> £{{player.moneyB2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -148,14 +134,19 @@
                 <table style="margin-top:30px;">
                     <tbody>
                         <tr id="leftsidetable" style=" font-weight: bold; background-color: grey; color: white;">
-                            
-                            <th> Monetary <br> Bonus </th>
-                            <th> Carbon <br> Emissions </th>
+                            <th> Probability</th>
+                            <th> Monetary Bonus </th>
+                            <th> Carbon Emissions </th>
                         </tr>
                         <tr>
-                            
-                            <td> £{{player.moneyB}}</td>
-                            <td> {{player.carbonB}}lbs. CO2 </td>
+                            <td> {{player.probB1 | to0 }}%</td>
+                            <td> £{{player.moneyB1}}</td>
+                            <td> {{player.carbonB1}}lbs. CO2 </td>
+                        </tr>
+                        <tr class="row-secondary-outcomeB">
+                            <td> {{player.probB2 | to0 }}% </td>
+                            <td> £{{player.moneyB2}}</td>
+                            <td> {{player.carbonB2}}lbs. CO2 </td>
                         </tr>
 
                     </tbody>
@@ -197,10 +188,10 @@
 
 <input id="page_load" type="hidden" name="page_load" value={{player.page_load}} />
 <input id="page_submit" type="hidden" name="page_submit" />
-<input id="newResponseTime" type="hidden" name="newResponseTime" />
+
+
 
 {{ formfield_errors 'page_load' }}
-{{ formfield_errors 'newResponseTime' }}
 {{ formfield_errors 'page_submit' }}
 {{ formfield_errors 'choice' }}
 {{ formfield_errors 'input_keyboard' }}
@@ -210,9 +201,6 @@
 
 {% block scripts %}
 <script type="text/javascript">
-
-
-
     jQuery('.otree-btn-next').hide()
 
 
@@ -221,6 +209,8 @@
     var choiceListener
 
     var reverse = "{{reverse}}"
+    var AoutcomeOneTop = "{{AoutcomeOneTop}}"
+    var BoutcomeOneTop = "{{BoutcomeOneTop}}"
     var page_load = "{{player.page_load}}"
     var progress_total = "{{C.NUM_ROUNDS}}"
     var round_num = "{{game_round}}"
@@ -249,8 +239,6 @@
         AClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            var load_timestamp =  jQuery('#page_load').val();
-            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
             console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
@@ -263,8 +251,6 @@
         BClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
-            var load_timestamp =  jQuery('#page_load').val();
-            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
             console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
@@ -307,6 +293,15 @@
         });
     }
 
+    function switchOutcomeRowsOptionA() {
+        jQuery(".row-secondary-outcomeA").prev().before(jQuery(".row-secondary-outcomeA"));
+    }
+
+    function switchOutcomeRowsOptionB() {
+        jQuery(".row-secondary-outcomeB").prev().before(jQuery(".row-secondary-outcomeB"));
+    }
+
+
 
     function switchSides() {
         div1 = $('#left-stimulus');
@@ -324,6 +319,7 @@
         //jQuery('#right-stimulus').on('click', choiceListener.BClick());
         console.log("enable firing")
     }
+
 
     function progress_experiment() {
         if (keys.size > 0) {
@@ -354,11 +350,17 @@
 
     jQuery(document).ready(function () {
 
-        if (page_load == 0) {
+        if (page_load == 'a') {
             var load_timestamp = Date.now()
             jQuery('#page_load').val(String(load_timestamp));
         }
 
+        if ( AoutcomeOneTop == "False"){
+            switchOutcomeRowsOptionA()
+        }
+        if ( BoutcomeOneTop == "False"){
+            switchOutcomeRowsOptionB()
+        }
         if (reverse == 1) {
             console.log("yesreverse")
             switchSides()
@@ -374,6 +376,10 @@
             choiceListener.KEY_J = 106
             choiceListener.KEYDOWN_F = 70
             choiceListener.KEYDOWN_J = 74
+        }
+
+        if (parseInt(round_num) % 80 < 6) {
+            $("#headerspan").prepend("This is a practice round: ")
         }
 
         choiceListener.init();

@@ -48,7 +48,9 @@
 {% endblock %}
 
 {% block content %}
-
+<p style="text-align: center; font-size: 0.9rem;">
+    Round number {{game_round}} out of {{C.NUM_ROUNDS}} in this game.   <progress id="myprogress" max="100" ></progress>
+</p>
 <p style="font-size:200%;text-align:center;"> Please choose one of the options </p>
 
 <div class="container">
@@ -209,6 +211,11 @@
     var reverse = "{{reverse}}"
     var outcomeOneTop = "{{outcomeOneTop}}"
     var page_load = "{{player.page_load}}"
+    var progress_total = "{{C.NUM_ROUNDS}}"
+    var round_num = "{{game_round}}"
+    var progress = 100*(round_num / progress_total)
+    $("#myprogress")[0].value= progress
+
 
     choiceListener = {
 

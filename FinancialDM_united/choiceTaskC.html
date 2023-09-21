@@ -82,7 +82,7 @@
 <p style="text-align: center; font-size: 0.9rem;">
     Round number {{game_round}} out of {{C.NUM_ROUNDS}} in this game.   <progress id="myprogress" max="100" ></progress>
 </p>
-<p style="font-size:200%;text-align:center;"> Please choose one of the options:</p>
+<p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options:</p>
 
 
 
@@ -374,6 +374,10 @@
             choiceListener.KEY_J = 106
             choiceListener.KEYDOWN_F = 70
             choiceListener.KEYDOWN_J = 74
+        }
+
+        if (parseInt(round_num) % 80 < 6) {
+            $("#headerspan").prepend("This is a practice round: ")
         }
 
         choiceListener.init();

@@ -59,6 +59,12 @@ SESSION_CONFIGS = [
         num_demo_participants=5,
         certainFirst = False
     ),
+    
+    dict(
+        name='FinancialDM_new',
+        app_sequence=['FinancialDM_Intro', 'FinancialDM_united'],
+        num_demo_participants=5
+    ),
 
      dict(
          name='carbontask',
@@ -104,7 +110,7 @@ PARTICIPANT_FIELDS = [
     'shuffledOrderC',
     'shuffledOrderU',
     'carbonLeft', 
-    'outcomeOneTop',
+    'certainFirst',
 
     ### CarbonTask Nina
     'task_rounds'
