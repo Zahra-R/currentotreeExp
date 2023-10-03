@@ -1,3 +1,4 @@
+import random
 from otree.api import *
 
 
@@ -47,8 +48,8 @@ class Player(BasePlayer):
     policy_item6 = make_field('Requiring electric utilities to provide increasing amounts of low carbon power.')  
     policy_item7 = make_field('Increase or introduce taxes on red meat (e.g., beef, lamb, veal).')
     policy_item8 = make_field('Increase subsidies for food products with low greenhouse gas emissions (e.g., fruit, vegetables, legumes, cereals).')
-    
 
+    
 # FUNCTIONS
 # PAGES
 
@@ -63,6 +64,7 @@ class policy(Page):
     form_model = 'player'
     form_fields = ['policy_item1', 'policy_item2','policy_item3','policy_item4','policy_item5','policy_item6', 'policy_item7', 'policy_item8']
 
+   
 
 
 
