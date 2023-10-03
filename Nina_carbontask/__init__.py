@@ -10,37 +10,37 @@ class C(BaseConstants):
     payment_per_correct_answer = .1
     
     FOOTPRINT_COMBINATIONS_TABLE = [
-        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b> recycle everything comprehensively </b>',
+        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b> recycles</b>',
          '<b>only regional food</b>', '<b>by bike</b>', '<b> does not fly </b> '],
-        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b> recycle everything comprehensively </b>',
+        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b> recycles </b>',
          '<b>regional and imported food</b>', '<b>by bus</b>','<b> does not fly </b> '],
-        ['<b>omnivorous diet</b>','<b>renewable-based electricity</b>','<b> do not specifically recycle</b>',
+        ['<b>meat-based diet</b>','<b>renewable-based electricity</b>','<b>  does not recycle</b>',
          '<b>regional and imported food</b>','<b>by bike</b>','<b> does not fly </b> '],
-        ['<b>omnivorous diet</b>', '<b>renewable-based electricity</b>','<b> do not specifically recycle</b>',
+        ['<b>meat-based diet</b>', '<b>renewable-based electricity</b>','<b>  does not recycle</b>',
          '<b>only regional food</b>', '<b>by bus</b>', '<b> does not fly </b> '],
-        ['<b>vegetarian diet</b>', '<b>conventional electricity</b>', '<b> do not specifically recycle</b>',
+        ['<b>vegetarian diet</b>', '<b>fossil-based electricity</b>', '<b>  does not recycle</b>',
          '<b>only regional food</b>', '<b>by bike</b>', '<b> does not fly </b> '],
-        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>','<b> do not specifically recycle</b>',
+        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>','<b>  does not recycle</b>',
             '<b>regional and imported food</b>','<b>by bike</b>',' <b>flies twice a year</b>'],
-        ['<b>vegetarian diet</b>', '<b>conventional electricity</b>', '<b> do not specifically recycle</b>',
+        ['<b>vegetarian diet</b>', '<b>fossil-based electricity</b>', '<b> does not recycle</b>',
          '<b>regional and imported food</b>','<b>by bus</b>','<b> does not fly </b> '],
-        ['<b>omnivorous diet</b>', '<b>conventional electricity</b>','<b> recycle everything comprehensively </b>',
+        ['<b>meat-based diet</b>', '<b>fossil-based electricity</b>','<b> recycles</b>',
          '<b>regional and imported food</b>', '<b>by bike</b>','<b> does not fly </b> '],
-        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b> do not specifically recycle</b>',
+        ['<b>vegetarian diet</b>', '<b>renewable-based electricity</b>', '<b>  does not recycle</b>',
          '<b>only regional food</b>','<b>by bus</b>',' <b>flies twice a year</b>'],
-        ['<b>omnivorous diet</b>','<b>renewable-based electricity</b>','<b> recycle everything comprehensively </b>',
+        ['<b>meat-based diet</b>','<b>renewable-based electricity</b>','<b> recycles </b>',
          '<b>only regional food</b>','<b>by bike</b>',' <b>flies twice a year</b>'],
-        ['<b>omnivorous diet</b>','<b>conventional electricity</b>','<b> recycle everything comprehensively </b>',
+        ['<b>meat-based diet</b>','<b>fossil-based electricity</b>','<b> recycles </b>',
          '<b>only regional food</b>','<b>by bus</b>','<b> does not fly </b> '],
-        ['<b>omnivorous diet</b>','<b>renewable-based electricity</b>', '<b> recycle everything comprehensively </b>',
+        ['<b>meat-based diet</b>','<b>renewable-based electricity</b>', '<b> recycles</b>',
          '<b>regional and imported food</b>','<b>by bus</b>',' <b>flies twice a year</b>'],
-        ['<b>vegetarian diet</b>','<b>conventional electricity</b>','<b> recycle everything comprehensively </b>',
+        ['<b>vegetarian diet</b>','<b>fossil-based electricity</b>','<b> recycles</b>',
          '<b>regional and imported food</b>', '<b>by bike</b>', ' <b>flies twice a year</b>'],
-        ['<b>vegetarian diet</b>','<b>conventional electricity</b>','<b> recycle everything comprehensively </b>',
+        ['<b>vegetarian diet</b>','<b>fossil-based electricity</b>','<b> recycles</b>',
          '<b>only regional food</b>', '<b>by bus</b>', ' <b>flies twice a year</b>'],
-        ['<b>omnivorous diet</b>','<b>conventional electricity</b>','<b> do not specifically recycle</b>',
+        ['<b>meat-based diet</b>','<b>fossil-based electricity</b>','<b>  does not recycle</b>',
          '<b>only regional food</b>','<b>by bike</b>',' <b>flies twice a year</b>'],
-        ['<b>omnivorous diet</b>','<b>conventional electricity</b>','<b> do not specifically recycle</b>',
+        ['<b>meat-based diet</b>','<b>fossil-based electricity</b>','<b>  does not recycle</b>',
          '<b>regional and imported food</b>','<b>by bus</b>', ' <b>flies twice a year</b>']
     ]
     NUM_ROUNDS = len(FOOTPRINT_COMBINATIONS_TABLE)
@@ -77,8 +77,10 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    rating0 = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], widget=widgets.RadioSelectHorizontal,
-                                  label='On a scale from 1 to 10, how climate friendly do you think this persons footprint is ?')
+    rating0 = models.IntegerField(choices=[['1', 'small footprint (1)'], ['2', '2'], ['3', '3'], ['4', '4'],
+                                           ['5', '5'],['6', '6'], ['7', '7'], ['8', '8'],['9', '9'], ['10', 'large footprint (10)']], 
+                                  widget=widgets.RadioSelectHorizontal,
+                                  label='How large or small do you think this persons footprint is?')
     vignetteNumber = models.IntegerField(initial= 0)
     order_behavior_types = models.StringField()
    
@@ -112,7 +114,7 @@ class task_page00(Page):
         random.shuffle(random_behavior_order)
         current_footprint_table_shuffled = []
         current_footprint_table_images_shuffled = []
-        behavior_types = ["Diet", "electricity", "Recycling", "Food", "Commute", "Vacation"]
+        behavior_types = ["Diet", "Electricity", "Recycling", "Food", "Commute", "Vacation"]
         order_behavior_types = []
         for i in random_behavior_order:
             current_footprint_table_shuffled.append(my_vignette_table[i])
