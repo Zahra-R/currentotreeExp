@@ -23,6 +23,26 @@ The different lifestyles these individuals have refer to:
     Please look at each individual carbon footprint carefully and take some time to come up with an evaluation. <br>
 </p>
 
-{{ next_button }}
+<div >
+    <button id="nextst" style=" margin-top: 4vh;" disabled class="otree-btn-next btn btn-primary">Next</button>
 
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+
+    enablebtn = function () {
+        document.getElementById("nextst").disabled = false;
+    }
+
+
+
+    window.onload = function () {
+        setTimeout(function () { enablebtn() }, 5 * 1000);
+    }
+</script>
+{% endblock %}
 {{ endblock }}
