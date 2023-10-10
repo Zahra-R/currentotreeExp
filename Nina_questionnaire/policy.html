@@ -1,17 +1,25 @@
 {{ block title }}questionnaire{{ endblock }}
 {{ block content }}
 <style>
-    /* Adjust spacing between sentences */
-    .question {
-        margin: 0;
-        /* Adjust this value to control spacing between sentences */
-        padding: 0;
-        /* Optionally adjust padding if needed */
-        line-height: 0.5;
-        size: 17
-    }
 
-</style>
+    .radio-column{
+        width:5%;
+        min-width:43px;
+        max-width:80px;
+        text-align: center;
+    }
+    
+    th, td {
+        padding: 1vh;
+        text-align: left;
+      }
+    
+      #choicetable{
+        margin-left: auto;
+        margin-right:auto;
+      }
+      
+    </style>
 
 <div class=".question">
     <p>
@@ -23,7 +31,7 @@
 
 
 <table class="radiotable">
-    <tr> <th></th> <th></th> <th    class="radio-column"> Strongly oppose (1)</th>  <th class="radio-column"  > </th class="radio-column">   <th class="radio-column"  > </th class="radio-column">  <th class="radio-column"> </th> <th class="radio-column"> (6)</th>  <th    class="radio-column"> Strongly support (7) </th> <th></th>  </tr>
+    <tr> <th></th> <th></th> <th    class="radio-column"> Strongly oppose (1)</th>  <th class="radio-column"  > </th> <th class="radio-column">  </th> <th class="radio-column"  > </th> <th class="radio-column"> </th> <th class="radio-column"> </th> <th class="radio-column"> (6)</th>  <th    class="radio-column"> Strongly support (7) </th> <th></th>  </tr>
 
 
    
@@ -36,6 +44,12 @@
         </tr>
     {{ endfor }}
 </table>
+
+<div class="next-btn radiotable">  
+    <div style="float: right; padding-top: 2vh;">
+         {% next_button %} 
+    </div>
+</div> 
 
 {{ next_button }}
 {{ endblock }}

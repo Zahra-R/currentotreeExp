@@ -1,6 +1,26 @@
 {{ block title }}questionnaire{{ endblock }}
 {{ block content }}
 
+<style>
+
+    .radio-column{
+        width:5%;
+        min-width:43px;
+        max-width:80px;
+        text-align: center;
+    }
+    
+    th, td {
+        padding: 1vh;
+        text-align: left;
+      }
+    
+      #choicetable{
+        margin-left: auto;
+        margin-right:auto;
+      }
+      
+    </style>
 
 {{ include_sibling 'variables_text.html' }}
 
@@ -9,10 +29,15 @@
 
 </p>
 
-<table class="table">
+
+
+<table class="radiotable">
+    <tr> <th></th>  <th    class="radio-column"> Completely disagree</th>  <th class="radio-column" > Disagree  </th> <th class="radio-column"> Somewhat disagree </th> <th class="radio-column"  > Somewhat agree  </th> <th class="radio-column"> Agree </th>  <th class="radio-column"> Agree completely </th>    </tr>
+
+
     {{ for field in form }}
         <tr>
-            <th>{{ field.label }}</th>
+            <th style="font-weight:normal;">{{ field.label }}</th>
             {{ for choice in field }}
                 <td>{{ choice }}</td>
             {{ endfor }}
@@ -20,6 +45,12 @@
     {{ endfor }}
 </table>
 
+
+<div class="next-btn radiotable">  
+    <div style="float: right; padding-top: 2vh;">
+         {% next_button %} 
+    </div>
+</div> 
 
 {{ next_button }}
 {{ endblock }}
