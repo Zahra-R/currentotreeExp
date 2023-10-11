@@ -20,24 +20,24 @@ class Player(BasePlayer):
     
     gender = models.StringField( label='How do you identify?',
         choices=[['Male', 'Male'], ['Female', 'Female'], 
-        ['prefer not to answer/ diverse', 'prefer not to answer/ diverse']],
+        ['Prefer not to answer/ diverse', 'Prefer not to answer/ diverse']],
         widget = widgets.RadioSelect
     )
     education = models.StringField( label='What is your highest education?',
-        choices=[['no formal education', 'no formal education'],
-                 ['obligatory school', 'obligatory school'], 
-                 ['secondary school', 'secondary school'],
-                 ['higher education (Bachelor, Master, Degree)', 'higher education (Bachelor, Master, Degree)']],
+        choices=[['No formal education', 'Mo formal education'],
+                 ['Obligatory school', 'Obligatory school'], 
+                 ['Secondary school', 'Secondary school'],
+                 ['Higher education (Bachelor, Master, Degree)', 'Higher education (Bachelor, Master, Degree)']],
                 widget = widgets.RadioSelect
     )
 
     income = models.StringField( blank=True,
-                                label='How high is the monthly income in your household',
-        choices=[['< x', '< x'],
-                 ['x to x', 'x to x'], 
-                 ['x to x', 'x to x'], 
-                 ['x to x', 'x to x'], 
-                 ['> x', '> x']],
+                                label='How high is the <b>yearly</b> income in your household?',
+        choices=[['< 18.000', '< 18.000'],
+                 ['18.000 to 23.000', '18.000 to 23.000], 
+                 ['23.001 to 30.500', '23.001 to 30.500'], 
+                 ['30.501 to 45.000', '30.500 to 45.000'], 
+                 ['> 45.001', '> 45.001']],
                   widget = widgets.RadioSelect
     )
 # consent
