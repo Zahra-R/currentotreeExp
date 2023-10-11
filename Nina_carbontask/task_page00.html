@@ -58,10 +58,29 @@
 <br>
 {{ formfields }}
 
-{{ next_button }}
+
+<div >
+    <button id="nextst" style=" margin-top: 4vh;" disabled class="otree-btn-next btn btn-primary">Next</button>
+
+</div>
+{% endblock %}
 
 
-{{ endblock}}
+{% block scripts %}
+<script>
+
+
+    enablebtn = function () {
+        document.getElementById("nextst").disabled = false;
+    }
+
+
+
+    window.onload = function () {
+        setTimeout(function () { enablebtn() }, 2 * 1000);
+    }
+</script>
+{% endblock %}
 
 {% block scripts %}
 <script>
