@@ -3,5 +3,25 @@
 
 {{ include_sibling 'instruction_task.html' }}
 
-{{ next_button }}
-{{ endblock }}
+<div >
+    <button id="nextst" style=" margin-top: 4vh;" disabled class="otree-btn-next btn btn-primary">Next</button>
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+
+    enablebtn = function () {
+        document.getElementById("nextst").disabled = false;
+    }
+
+
+
+    window.onload = function () {
+        setTimeout(function () { enablebtn() }, 5 * 1000);
+    }
+</script>
+{% endblock %}
