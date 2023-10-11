@@ -32,12 +32,13 @@ class Player(BasePlayer):
     )
 
     income = models.StringField( blank=True,
-                                label='How high is the <b>yearly</b> income in your household?',
+                                label='How high is your <b>yearly</b> personal income ?',
         choices=[['< 18.000', '< 18.000'],
                  ['18.000 to 23.000', '18.000 to 23.000], 
                  ['23.001 to 30.500', '23.001 to 30.500'], 
                  ['30.501 to 45.000', '30.500 to 45.000'], 
-                 ['> 45.001', '> 45.001']],
+                 ['> 45.001', '> 45.001'],
+                 ['Prefer not to say', 'Prefer not to say']],
                   widget = widgets.RadioSelect
     )
 # consent
