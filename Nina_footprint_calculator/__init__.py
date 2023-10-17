@@ -97,26 +97,10 @@ class questions_footprint(Page):
         player.total_co2 = round(footprint_total, 1)  # Store the total in the player's field
 
 
-class display_footprint(Page):
-    form_model = 'player'
-    form_fields = ['total_co2']
-
-    def get_form_fields(self):
-        # Make the total_co2 field read-only
-        return ['total_co2']
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        return {
-            'total_co2': player.total_co2
-        }
-    
-
 
 # Page sequence
 page_sequence = [
-    questions_footprint,
-    display_footprint
+    questions_footprint
     
 ]
 
