@@ -7,13 +7,14 @@ class C(BaseConstants):
     NUM_ROUNDS = 1
 
     CARBON_FOOTPRINT = {
-        'footprint_1': { '1': 0.59, '2': 0.44 , '3':0.3 , '4': 0.15, '5': 0.04},
+        'footprint_1': { '1': 0, '2': -0.111 , '3':-0.222 , '4': -0.333, '5': -0.444},
         'footprint_2': {'1': -.0575 , '2': 0} ,
         'footprint_3': { '1': 0.955, '2': 1.053 , '3':1.431 , '4': 1.234, '5': 3.160, '6': 2.282 },
         'footprint_4': {'1': 4.0896, '2': 3.27168, '3':2.0414, '4': 1.0872, '5':0.2726, '6': 0.0 } ,
         'footprint_5': {'1': 2.3328, '2': 1.8662, '3':1.11645, '4': 0.6201, '5':0.1555, '6': 0.0 } ,
         'footprint_6': {'1': 1.0944, '2': 0.8755, '3':0.5463, '4': 0.2909, '5':0.0729, '6': 0.0 } ,
-        'footprint_7': {'1': 13.48, '2': 6.74, '3':3.59, '4': 2.07, '5':0.90, '7': 0.36, '7': 0.0}  
+        'footprint_7': {'1': 13.48, '2': 6.74, '3':3.59, '4': 2.07, '5':0.90, '7': 0.36, '7': 0.0}  ,
+        'footprint_8': {'1': 0.1031 , '2': 0.6988837, '3':1.294697,'4': 1.294697 } ,
     }
 
 
@@ -66,7 +67,7 @@ class Player(BasePlayer):
 
     footprint_7 = models.IntegerField(choices=[['1', 'More than 50 hours per year'],['2', '25 - 49 hours per year'],['3', '15 - 24 hours per year'],
                                              ['4', '8 - 14 hours per year'], ['5', '2 - 7 hours per year'],['6', '0.1 - 2 hours per year'], ['7', 'I did not fly in the last five years'] ],
-                                             label = '<b>How many hours did you fly by plane in the last five years on average?</b>',
+                                             label = '<b>How many hours did you fly by plane in 2022?</b>',
                                              widget=widgets.RadioSelectHorizontal,
                                               )
     
