@@ -28,6 +28,7 @@ class Player(BasePlayer):
     )
 
     # questionnaire
+    conservative_liberal = models.IntegerField( widget=widgets.RadioSelect, choices=[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4,5])
     climate_change_concern1 = make_field('I worry about the climate´s state.')
     climate_change_concern2 = make_field('Climate protection is important for our future.')
     climate_change_concern3 = make_field('We must protect the climate´s delicate equilibrium.')
@@ -55,7 +56,7 @@ class Player(BasePlayer):
 
 class cc_concern(Page):
     form_model = 'player'
-    form_fields = ['climate_change_concern1', 'climate_change_concern2', 'climate_change_concern3', 'climate_change_concern4']
+    form_fields = ['climate_change_concern1', 'climate_change_concern2', 'climate_change_concern3', 'climate_change_concern4', 'conservative_liberal']
 class policy_support(Page):
     form_model = 'player'
     form_fields = []
