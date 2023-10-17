@@ -1,0 +1,24 @@
+
+{{ block title }}Some additional information{{ endblock }}
+{{ block content }}
+
+
+
+
+
+<div class="radiotable" style="padding-top:10vh; padding-left:1vw;">
+<p> Overall, how would you describe your political attitudes and beliefs? </p>
+<p style="text-indent: 7vw;">
+    very liberal &nbsp;
+    {{ for choice in form.conservative_liberal}}
+        {{ choice }}
+    {{ endfor }}
+    &nbsp; very conservative
+</p>
+</div>
+
+
+{{ next_button }}
+
+{% endblock %}
+
