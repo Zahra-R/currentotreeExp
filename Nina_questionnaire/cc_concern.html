@@ -1,4 +1,4 @@
-{{ block title }}questionnaire{{ endblock }}
+{{ block title }}Climate change concern{{ endblock }}
 {{ block content }}
 
 <style>
@@ -49,24 +49,6 @@
          {% next_button %} 
     </div>
 </div> 
-
-{{ endblock }}
-
-{% block content %}
-
-
-
-<div class="radiotable" style="padding-top:10vh; padding-left:1vw;">
-<p> Overall, how would you describe your political attitudes and beliefs? </p>
-<p style="text-indent: 7vw;">
-    very liberal &nbsp;
-    {{ for choice in form.conservative_liberal}}
-        {{ choice }}
-    {{ endfor }}
-    &nbsp; very conservative
-</p>
-</div>
-
 
 
 <div class="next-btn">  
