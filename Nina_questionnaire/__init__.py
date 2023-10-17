@@ -56,7 +56,7 @@ class Player(BasePlayer):
 
 class cc_concern(Page):
     form_model = 'player'
-    form_fields = ['climate_change_concern1', 'climate_change_concern2', 'climate_change_concern3', 'climate_change_concern4', 'conservative_liberal']
+    form_fields = ['climate_change_concern1', 'climate_change_concern2', 'climate_change_concern3', 'climate_change_concern4']
 class policy_support(Page):
     form_model = 'player'
     form_fields = []
@@ -65,7 +65,10 @@ class policy(Page):
     form_model = 'player'
     form_fields = ['policy_item1', 'policy_item2','policy_item3','policy_item4','policy_item5','policy_item6', 'policy_item7', 'policy_item8']
 
-   
+class pol_orientation(Page):
+    form_model = 'player'
+    form_fields = ['conservative_liberal']
+
 
 
 
@@ -73,5 +76,6 @@ class policy(Page):
 page_sequence = [
     policy_support, 
     cc_concern,
+    pol_orientation,
     policy
 ]
