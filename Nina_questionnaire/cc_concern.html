@@ -1,4 +1,4 @@
-{{ block title }}questionnaire{{ endblock }}
+{{ block title }}Climate change concern{{ endblock }}
 {{ block content }}
 
 <style>
@@ -50,7 +50,11 @@
     </div>
 </div> 
 
-{{ next_button }}
-{{ endblock }}
 
+<div class="next-btn">  
+    <div style="float: right; padding-top: 5vh;">
+         {% next_button %} 
+    </div>
+</div> 
+{% endblock %}
 
