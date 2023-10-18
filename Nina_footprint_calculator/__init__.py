@@ -37,7 +37,7 @@ class Player(BasePlayer):
                                              widget=widgets.RadioSelectHorizontal,
                                              )
     
-    footprint_2 = models.IntegerField(choices=[['1', 'I recylce'],['2', 'I do not recycle'],
+    footprint_2 = models.IntegerField(choices=[['1', 'I recylce'],['2', 'I do not recycle']],
                                              label = '<b>This question is about recycling in the household. Which of these best describes your recycling behavior?</b>',
                                              widget=widgets.RadioSelectHorizontal,
                                              )
