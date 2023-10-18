@@ -324,15 +324,15 @@ class before_Games(Page):
 
 page_sequence = [
     Consent,
-    #Intro_1,
-    #Intro_2,
-    # Intro_3,
-    # NotAtt, 
-    # Preview_Game_R, 
-    # Preview_Game,
-    # NoA2,
-    # NoA2_R,
-    # Preview_GameR2, 
-    # Preview_Game2,
-    # before_Games
+    Intro_1,
+    Intro_2,
+    Intro_3,
+    NotAtt, 
+    Preview_Game_R, 
+    Preview_Game,
+    NoA2,
+    NoA2_R,
+    Preview_GameR2, 
+    Preview_Game2,
+    before_Games
 ]

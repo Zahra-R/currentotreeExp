@@ -1,7 +1,7 @@
 from otree.api import *
 import numpy as np
 import random
-from random import choice as random_draw
+from random import choice as draw_random_number
 import csv
 
 doc = """
@@ -29,8 +29,8 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     QUESTIONS_C = read_csvC()
     QUESTIONS_U = read_csvU()
-    NUM_ROUNDS = 4
-    #NUM_ROUNDS =  len(QUESTIONS_C) + len(QUESTIONS_U)
+    #NUM_ROUNDS = 4
+    NUM_ROUNDS =  len(QUESTIONS_C) + len(QUESTIONS_U)
 
 
 class Subsession(BaseSubsession):
@@ -42,53 +42,71 @@ def creating_session(subsession: Subsession):
         player.certainFirst = player.participant.certainFirst
         if subsession.round_number == 1:
             ######### this is for the bonus payoff later on ########
-            seqa = range(6,80)
-            seqb = range(86,160)
+            # 1 to 4 is practice ; 5 to 84 is part 1, 85 to 88 is practice, 89 to 164 is part 2) 
+            seqa = range(5,85)
+            print("seqa", seqa)
+            seqb = range(89,165)
             seq = np.concatenate((seqa, seqb), axis = None)
-            # this line needs to be removed
-            seq = [1,2,3,4]
-            player.drawn_round = random_draw(seq)
+            print("seq", seq)
+            # this next line needs to be removed, was only for practice purposes
+            #seq = [1,2,3,4]
+            player.drawn_round = int(draw_random_number(seq))
             #############################################
-            shuffledOrderC = np.arange(len(C.QUESTIONS_C)) 
+            shuffledOrderC = np.arange(start = 4, stop=  len(C.QUESTIONS_C), step = 1) 
             random.shuffle(shuffledOrderC)
-            player.participant.shuffledOrderC = shuffledOrderC 
-            shuffledOrderU = np.arange(len(C.QUESTIONS_U)) 
+            print(shuffledOrderC)
+            player.participant.shuffledOrderC = np.concatenate((range(0,4), shuffledOrderC), axis = None )
+            print("this should be the entire sequence of trial ids ", player.participant.shuffledOrderC)
+            print(len(player.participant.shuffledOrderC))
+            shuffledOrderU = np.arange(start= 4, stop = len(C.QUESTIONS_U) , step = 1) 
             random.shuffle(shuffledOrderU)
-            player.participant.shuffledOrderU = shuffledOrderU
+            print(shuffledOrderU)
+            player.participant.shuffledOrderU = np.concatenate((range(0,4), shuffledOrderU), axis = None)
+            print("this should be the entire sequence of trial ids ", player.participant.shuffledOrderU)
+            print(len(player.participant.shuffledOrderC))
+            print("this is num rounds", C.NUM_ROUNDS)
         if player.participant.certainFirst == False:
             player.mod_round_number = (( subsession.round_number + int(C.NUM_ROUNDS/2) ) % C.NUM_ROUNDS)
             if player.mod_round_number == 0:
                 player.mod_round_number = C.NUM_ROUNDS
         else: 
             player.mod_round_number = subsession.round_number
+        print("subsession round number ", subsession.round_number-1)
+        print("mod rd", player.mod_round_number)
         if player.mod_round_number <= int(C.NUM_ROUNDS/2): 
-            current_questionC = C.QUESTIONS_C[player.participant.shuffledOrderC[(subsession.round_number-1) % (int(C.NUM_ROUNDS/2))]]
+            #print("first if current Question index", player.participant.shuffledOrderC[((subsession.round_number) % (int(C.NUM_ROUNDS/2)))-1], subsession.round_number)
+            current_questionC = C.QUESTIONS_C[player.participant.shuffledOrderC[((subsession.round_number) % (int(C.NUM_ROUNDS/2)))-1]]
             player.moneyA =  int(current_questionC['moA'])
             player.moneyB = int(current_questionC['moB'])
             player.carbonA = int(current_questionC['coA'])
             player.carbonB = int(current_questionC['coB'])
             player.stimulusIDC = int(current_questionC['sid'])
-            player.OptionARight = random_draw([0, 1])
+            player.OptionARight = draw_random_number([0, 1])
+            player.practice = current_questionC['practice']
         else:
-            current_questionU = C.QUESTIONS_U[player.participant.shuffledOrderU[(subsession.round_number-1) % (int(C.NUM_ROUNDS/2))]]
+            #print(" else current Question index", player.participant.shuffledOrderU[((subsession.round_number) % (int(C.NUM_ROUNDS/2)))-1], subsession.round_number)
+            current_questionU = C.QUESTIONS_U[player.participant.shuffledOrderU[(subsession.round_number) % (int(C.NUM_ROUNDS/2))-1]]
             player.moneyA1 = int(current_questionU['moA1'])
             player.moneyA2 = int(current_questionU['moA2'])
             player.carbonA1 = int(current_questionU['coA1'])
             player.carbonA2 = int(current_questionU['coA2'])
             player.probA1 = 100* float(current_questionU['pA1'])
-            player.probA2 = 100 -  (100* float(current_questionU['pA1']))
+            player.probA2 = 100* float(current_questionU['pA2'])
+            #player.probA2 = 100 -  (100* float(current_questionU['pA1']))
             
             player.moneyB1 = int(current_questionU['moB1'])
             player.moneyB2 = int(current_questionU['moB2'])
             player.carbonB1 = int(current_questionU['coB1'])
             player.carbonB2 = int(current_questionU['coB2'])
             player.probB1 =   100* float(current_questionU['pB1'])
-            player.probB2 = 100 - (100* float(current_questionU['pB1']))
-            player.OptionAoutcomeOneTop = random_draw([True, False])
-            player.OptionBoutcomeOneTop = random_draw([True, False])
+            player.probB2 =   100* float(current_questionU['pB2'])
+            #player.probB2 = 100 - (100* float(current_questionU['pB1']))
+            player.OptionAoutcomeOneTop = draw_random_number([True, False])
+            player.OptionBoutcomeOneTop = draw_random_number([True, False])
+            player.practice = current_questionU['practice']
             
             player.stimulusIDU = int(current_questionU['sid'])
-            player.OptionARight = random_draw([0, 1])
+            player.OptionARight = draw_random_number([0, 1])
 
 
 
@@ -99,12 +117,16 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     mod_round_number = models.IntegerField()
+    practice = models.StringField()
+    stimulusIDC = models.IntegerField()
+    stimulusIDU = models.IntegerField()
 
     moneyA = models.IntegerField()
     moneyB = models.IntegerField()
     carbonA = models.IntegerField()
     carbonB = models.IntegerField()
     choice = models.StringField()
+    
 
     moneyA1 = models.IntegerField()
     moneyA2 = models.IntegerField()
@@ -138,12 +160,93 @@ class Player(BasePlayer):
     outcome_money = models.FloatField()
     outcome_carbon = models.FloatField()
 
+    comprehensions_C1 = models.StringField(choices=[ [1, "15 lbs. CO2"], [2, "30 lbs. CO2"], [3, "50 lbs. CO2"]], label ="Which amount of carbon would be emitted if you chose Option B?",  widget = widgets.RadioSelect )
+    comprehensions_C2 = models.StringField(choices=[[1, "$20"], [2,"$45"], [3, "$50"]], label ="What is the highest monetary amount you can get in this choice situation? ",  widget = widgets.RadioSelect )
+    comprehensions_U1 = models.StringField(choices=[ [1, "45 lbs. CO2"], [2, "50 lbs. CO2"], [3, "55 lbs. CO2"]], label ="What is the maximum amount of carbon that could be emitted if you chose Option A?",  widget = widgets.RadioSelect )
+    comprehensions_U2 = models.StringField(choices=[[1, "30%"], [2,"50%"], [3, "70%"]], label ="What is the probability of receiving a monetary bonus of $40 when you choose Option A?",  widget = widgets.RadioSelect )
+
+
     # @property
     # def response_time(player):
     #     if player.page_submit != None:
     #         return player.page_submit - player.page_load
         
-        
+
+class InstructionC1(Page): 
+    form_model = 'player'
+    form_fields = ["comprehensions_C1", "comprehensions_C2"]
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            'carbonLeft': player.participant.carbonLeft,
+            'modRoundNumber': player.mod_round_number,
+            'totalRounds': C.NUM_ROUNDS
+        }
+    @staticmethod
+    def is_displayed(player: Player):
+        #show = (player.participant.certainFirst & player.round_number <=80) | (not player.participant.certainFirst & player.round_number >80 )
+        return player.mod_round_number == 1
+    
+
+class InstructionU1(Page): 
+    form_model = 'player'
+    form_fields = ["comprehensions_U1", "comprehensions_U2"]
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            'carbonLeft': player.participant.carbonLeft,
+            'modRoundNumber': player.mod_round_number,
+            'totalRounds': C.NUM_ROUNDS,
+            'halftotalRounds': int(C.NUM_ROUNDS/2)
+        }
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.mod_round_number -1  == int(C.NUM_ROUNDS/2)
+    
+    
+                   
+
+class InstructionC2(Page): 
+    form_model = 'player'
+    @staticmethod
+    def vars_for_template(player: Player):
+        Q1correct = True if player.comprehensions_C1 == "3" else False
+        Q2correct = True if  player.comprehensions_C2 == "2" else False
+        bothcorrect = True if Q1correct == True & Q2correct == True else False
+        nonecorrect = True if Q1correct == False & Q2correct == False else False
+        return {
+            'Q1correct': Q1correct, 
+            'Q2correct': Q2correct,
+            'bothcorrect': bothcorrect,
+            'nonecorrect': nonecorrect,
+            'carbonLeft': player.participant.carbonLeft
+        }
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.mod_round_number == 1
+    
+                  
+
+class InstructionU2(Page): 
+    form_model = 'player'
+    @staticmethod
+    def vars_for_template(player: Player):
+        Q1correct = True if player.comprehensions_U1 == "1" else False
+        Q2correct = True if  player.comprehensions_U2 == "1" else False
+        bothcorrect = True if Q1correct == True & Q2correct == True else False
+        nonecorrect = True if Q1correct == False & Q2correct == False else False
+        return {
+            'Q1correct': Q1correct, 
+            'Q2correct': Q2correct,
+            'bothcorrect': bothcorrect,
+            'nonecorrect': nonecorrect,
+            'carbonLeft': player.participant.carbonLeft
+        }
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.mod_round_number -1 == int(C.NUM_ROUNDS/2)
+    
+
 class choiceTaskC(Page):
     form_model = 'player'
     form_fields = ["choice","input_keyboard", "page_load", "page_submit", "newResponseTime"]
@@ -156,7 +259,10 @@ class choiceTaskC(Page):
         return {
             'reverse': player.OptionARight,
             'carbonLeft': player.participant.carbonLeft,
-            'game_round': player.round_number
+            'game_round': player.round_number,
+            'modRoundNumber': player.mod_round_number,
+            'totalRounds': C.NUM_ROUNDS,
+            'halftotalRounds': int(C.NUM_ROUNDS/2)
         }
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -184,7 +290,10 @@ class choiceTaskU(Page):
             'carbonLeft': player.participant.carbonLeft,
             'AoutcomeOneTop': player.OptionAoutcomeOneTop,
             'BoutcomeOneTop': player.OptionBoutcomeOneTop,
-            'game_round': player.round_number
+            'game_round': player.round_number, 
+            'modRoundNumber': player.mod_round_number,
+            'totalRounds': C.NUM_ROUNDS,
+            'halftotalRounds': int(C.NUM_ROUNDS/2)
         }
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -195,7 +304,6 @@ class choiceTaskU(Page):
     def is_displayed(player: Player):
         return player.mod_round_number > int(C.NUM_ROUNDS/2)
     
-
 
 
 class betweenGames(Page):
@@ -209,7 +317,7 @@ class afterPractice(Page):
     @staticmethod
     def is_displayed(player: Player):
         return (
-            player.round_number %(int(C.NUM_ROUNDS/2)) == 5
+            player.round_number %(int(C.NUM_ROUNDS/2)) == 4
         )
 
 
@@ -296,4 +404,4 @@ class Results(Page):
 
     
 
-page_sequence = [choiceTaskU, choiceTaskC, afterPractice, betweenGames, Results]
+page_sequence = [ betweenGames, InstructionC1, InstructionC2, InstructionU1, InstructionU2, choiceTaskU, choiceTaskC, afterPractice, betweenGames, Results]
