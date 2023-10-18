@@ -72,6 +72,13 @@ SESSION_CONFIGS = [
          num_demo_participants=10,
      ),
 
+     dict(
+       name='tracking_demo',
+       display_name="Tracking Demo",
+       num_demo_participants=3,
+       app_sequence=['tracking_demo']
+    ),
+
 
 ]
 
