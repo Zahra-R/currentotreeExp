@@ -1,5 +1,18 @@
-{{ block title }}Survey{{ endblock }}
+{% block styles %}
+    <link href="{{ static 'global/css/Carbontask.css'}}" rel="stylesheet">
+{% endblock %}
+
+{{ block title }}Thank you for participating{{ endblock }}
 {{ block content }}
+
+
+<div>
+
+Thank you for your interest in participating in this study!<br>
+To start, please read some information and provide your consent if you are interested in taking part in the study.<br>
+
+</div>
+<br>
 
 {{ include_sibling 'consent.html' }}
 

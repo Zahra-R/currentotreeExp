@@ -69,13 +69,18 @@ class pol_orientation(Page):
     form_model = 'player'
     form_fields = ['conservative_liberal']
 
-
+class end(Page):
+    form_model = 'player'
+    form_fields = []
 
 
 # Page sequence
 page_sequence = [
     policy_support, 
+    policy,
+
     cc_concern,
     pol_orientation,
-    policy
+
+    end
 ]
