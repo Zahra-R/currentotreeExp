@@ -1,8 +1,6 @@
 CCsampling/.DS_Store
 db.sqlite3
-.DS_Store
 CCsampling/__pycache__/__init__.cpython-39.pyc
-.DS_Store
 .DS_Store
 CCsampling/__pycache__/__init__.cpython-39.pyc
 FinancialDM_U/__pycache__/__init__.cpython-39.pyc
@@ -19,3 +17,4 @@ __temp*
 __pycache__/
 *.py[cod]
 *.otreezip
+*.pyc
