@@ -29,8 +29,8 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     QUESTIONS_C = read_csvC()
     QUESTIONS_U = read_csvU()
-    #NUM_ROUNDS = 4
-    NUM_ROUNDS =  len(QUESTIONS_C) + len(QUESTIONS_U)
+    NUM_ROUNDS = 12
+    #NUM_ROUNDS =  len(QUESTIONS_C) + len(QUESTIONS_U)
 
 
 class Subsession(BaseSubsession):
@@ -404,4 +404,4 @@ class Results(Page):
 
     
 
-page_sequence = [ betweenGames, InstructionC1, InstructionC2, InstructionU1, InstructionU2, choiceTaskU, choiceTaskC, afterPractice, betweenGames, Results]
+page_sequence = [ InstructionC1, InstructionC2, InstructionU1, InstructionU2, choiceTaskU, choiceTaskC, afterPractice, betweenGames, Results]

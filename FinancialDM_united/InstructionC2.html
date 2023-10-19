@@ -85,18 +85,18 @@ Your task
     <p> Great, you answered both questions correctly.  </p>
 {{else }}
     {{if nonecorrect == True}}
-            <p> Oh no, none of your answers were correct. Please make sure you understand the task correctly before you proceed.</p>
+            <p> Oh no, none of your answers were correct. Please read the instructions below carefully.</p>
     {{endif}}
     {{if Q1correct == True}}
-            <p> You got the first question correct, but answered the second questions incorrectly. Please make sure you understand the task correctly before you proceed.</p>
+            <p> You got the first question correct, but answered the second questions incorrectly. Please read the instructions below carefully.</p>
     {{endif}}
     {{if Q2correct == True}}
-            <p> You got the second question correct, but answered the first questions incorrectly. Please make sure you understand the task correctly before you proceed.</p>
+            <p> You got the second question correct, but answered the first questions incorrectly. Please read the instructions below carefully.</p>
     {{endif}}
 {{endif}}
 
 
-<p style="padding-bottom: 20pt;"> In the example below, Option B emits 50 lbs. C02. By choosing Option A you will get the higher payoff, which is 45$. </p>
+<p > Answer for Question 1: Option B emits 50 lbs. C02. </p> <p style="padding-bottom: 20pt;"> Answer for Questions 2: The highest bonus you can get is $45, which is what you get from choosing Option A. </p>
 
 <div class="container">
     <div class="row">
@@ -179,15 +179,19 @@ Your task
     </div>
 </div>
 
-<p style="padding-top: 20pt;"> You see the two options with their respective amounts of carbon emissions and your monetary bonus.  </p>
 
-<p> To better understand the consequences, take into account that 1 lbs. CO2 corresponds to approximately 1.1 miles of a car drive with an average car. </p>
+{{if bothcorrect == False}} 
+    <p style="padding-top: 20pt;"> You see the two options with their respective amounts of carbon emissions and your monetary bonus.  </p>
 
-<p> Your monetary bonus is displayed in study dollars and will be exchanged to British pounds according to £1 equals study $25.</p>
+    <p> To better understand the consequences, take into account that 1 lbs. CO2 corresponds to approximately 1.1 miles of a car drive with an average car. </p>
 
-<p> To choose an option use your keyboard and press <i>f</i> for Option A and <i>j</i> for Option B.  </p>
+    <p> Your monetary bonus is displayed in study dollars and will be exchanged to British pounds according to £1 equals study $25.</p>
 
-<p> You have now the chance to practice the task in four hypothetical choice situations. Note that your choices during the practice rounds will not be relevant for your monetary bonus or the real-world carbon emission. </p>
+    <p> To choose an option use your keyboard and press <i>f</i> for Option A and <i>j</i> for Option B.  </p>
+
+{{endif}}
+
+<p style="padding-top: 20pt;"> You have now the chance to practice the task in four hypothetical choice situations. Note that your choices during the practice rounds will not be relevant for your monetary bonus or the real-world carbon emission. </p>
 
 
 <button style="float: right; margin-top: 2vh;" class="otree-btn-next btn btn-primary" id="consent-next">Next</button>

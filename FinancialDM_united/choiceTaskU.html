@@ -49,7 +49,8 @@
 
 {% block content %}
 <p style="text-align: center; font-size: 0.9rem;">
-    Round number {{game_round}} out of {{C.NUM_ROUNDS}} in this game.   <progress id="myprogress" max="100" ></progress>
+    Round number <span id ="block_round_number" > </span> out of <span id="block_round_total"> </span>in this block. 
+    <!--   <progress id="myprogress" max="100" ></progress> -->
 </p>
 <p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options </p>
 
@@ -69,12 +70,12 @@
                         <tr>
                             <td> {{player.probA1 | to0 }}% </td>
                             <td> {{player.carbonA1}}lbs. CO2 </td>
-                            <td> £{{player.moneyA1}}</td>
+                            <td> {{player.moneyA1}}$</td>
                         </tr>
                         <tr class="row-secondary-outcomeA">
                             <td> {{player.probA2 | to0 }}% </td>
                             <td> {{player.carbonA2}}lbs. CO2 </td>
-                            <td> £{{player.moneyA2}}</td>
+                            <td> {{player.moneyA2}}$</td>
                         </tr>
 
                     </tbody>
@@ -89,12 +90,12 @@
                         </tr>
                         <tr>
                             <td> {{player.probA1 | to0 }}%</td>
-                            <td> £{{player.moneyA1}}</td>
+                            <td> {{player.moneyA1}}$</td>
                             <td> {{player.carbonA1}}lbs. CO2 </td>
                         </tr>
                         <tr class="row-secondary-outcomeA">
                             <td> {{ player.probA2 | to0 }}% </td>
-                            <td> £{{player.moneyA2}}</td>
+                            <td> {{player.moneyA2}}$</td>
                             <td> {{player.carbonA2}}lbs. CO2 </td>
                         </tr>
 
@@ -121,12 +122,12 @@
                         <tr>
                             <td> {{player.probB1 | to0 }}%</td>
                             <td> {{player.carbonB1}}lbs. CO2 </td>
-                            <td> £{{player.moneyB1}}</td>
+                            <td> {{player.moneyB1}}$</td>
                         </tr>
                         <tr class="row-secondary-outcomeB">
                             <td> {{player.probB2 | to0 }}% </td>
                             <td> {{player.carbonB2}}lbs. CO2 </td>
-                            <td> £{{player.moneyB2}}</td>
+                            <td> {{player.moneyB2}}$</td>
                         </tr>
                     </tbody>
                 </table>
@@ -140,12 +141,12 @@
                         </tr>
                         <tr>
                             <td> {{player.probB1 | to0 }}%</td>
-                            <td> £{{player.moneyB1}}</td>
+                            <td> {{player.moneyB1}}$</td>
                             <td> {{player.carbonB1}}lbs. CO2 </td>
                         </tr>
                         <tr class="row-secondary-outcomeB">
                             <td> {{player.probB2 | to0 }}% </td>
-                            <td> £{{player.moneyB2}}</td>
+                            <td> {{player.moneyB2}}$</td>
                             <td> {{player.carbonB2}}lbs. CO2 </td>
                         </tr>
 
@@ -214,8 +215,8 @@
     var page_load = "{{player.page_load}}"
     var progress_total = "{{C.NUM_ROUNDS}}"
     var round_num = "{{game_round}}"
-    var progress = 100*(round_num / progress_total)
-    $("#myprogress")[0].value= progress
+    //var progress = 100*(round_num / progress_total)
+    //$("#myprogress")[0].value= progress
 
 
     choiceListener = {
@@ -378,8 +379,18 @@
             choiceListener.KEYDOWN_J = 74
         }
 
-        if (parseInt(round_num) % 80 < 6) {
+        block_round = parseInt(round_num) % (parseInt(progress_total) /2 )
+        if (block_round == 0 ) {
+            block_round = parseInt(progress_total) /2 
+        }
+        if (block_round < 5) {
             $("#headerspan").prepend("This is a practice round: ")
+            $("#block_round_number").html(block_round)
+            $("#block_round_total").html("4 ")
+        }
+        else {
+            $("#block_round_number").html(block_round - 4 )
+            $("#block_round_total").html((parseInt(progress_total)/2 - 4) + " ")
         }
 
         choiceListener.init();
