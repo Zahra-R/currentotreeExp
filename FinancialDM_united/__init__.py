@@ -212,8 +212,8 @@ class InstructionC2(Page):
     def vars_for_template(player: Player):
         Q1correct = True if player.comprehensions_C1 == "3" else False
         Q2correct = True if  player.comprehensions_C2 == "2" else False
-        bothcorrect = True if Q1correct == True & Q2correct == True else False
-        nonecorrect = True if Q1correct == False & Q2correct == False else False
+        bothcorrect = True if (Q1correct == True) & (Q2correct == True) else False
+        nonecorrect = True if (Q1correct == False) & (Q2correct == False) else False
         return {
             'Q1correct': Q1correct, 
             'Q2correct': Q2correct,
@@ -233,8 +233,8 @@ class InstructionU2(Page):
     def vars_for_template(player: Player):
         Q1correct = True if player.comprehensions_U1 == "1" else False
         Q2correct = True if  player.comprehensions_U2 == "1" else False
-        bothcorrect = True if Q1correct == True & Q2correct == True else False
-        nonecorrect = True if Q1correct == False & Q2correct == False else False
+        bothcorrect = True if (Q1correct == True) & (Q2correct == True) else False
+        nonecorrect = True if (Q1correct == False) & (Q2correct == False) else False
         return {
             'Q1correct': Q1correct, 
             'Q2correct': Q2correct,
