@@ -1,7 +1,19 @@
+{% block styles %}
+    <link href="{{ static 'global/css/Carbontask.css'}}" rel="stylesheet">
+{% endblock %}
+
 {{ block title }}Climate change concern{{ endblock }}
 {{ block content }}
 
 <style>
+     .question {
+        margin: 0;
+        /* Adjust this value to control spacing between sentences */
+        padding: 0;
+        /* Optionally adjust padding if needed */
+        line-height: 0.5;
+        size: 17
+    }
 
     .radio-column{
         width:10%;
@@ -20,7 +32,7 @@
         margin-right:auto;
       }
       
-    </style>
+</style>
 
 <p>
     Please indicate how much you agree or disagree with the following statements:

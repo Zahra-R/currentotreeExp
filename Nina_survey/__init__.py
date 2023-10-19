@@ -16,15 +16,15 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     # demographics
-    age = models.IntegerField(label='How old are you', min=18, max=90)
+    age = models.IntegerField(label='What is your <b>age</b>', min=18, max=90)
     
     gender = models.StringField( label='How do you identify?',
         choices=[['Male', 'Male'], ['Female', 'Female'], 
         ['Prefer not to answer/ diverse', 'Prefer not to answer/ diverse']],
         widget = widgets.RadioSelect
     )
-    education = models.StringField( label='What is your highest education?',
-        choices=[['No formal education', 'Mo formal education'],
+    education = models.StringField( label='What is your <b>highest education</b>?',
+        choices=[['No formal education', 'No formal education'],
                  ['Obligatory school', 'Obligatory school'], 
                  ['Secondary school', 'Secondary school'],
                  ['Higher education (Bachelor, Master, Degree)', 'Higher education (Bachelor, Master, Degree)']],
@@ -32,13 +32,12 @@ class Player(BasePlayer):
     )
 
     income = models.StringField( blank=True,
-                                label='How high is your <b>yearly personal income before tax </b>?',
+                                label='How high is your <b>yearly personal income before tax </b>? <br> <i> You may skip this question if you wish to </i>',
         choices=[['< 18.000£', '< 18.000£'],
                  ['18.000£ to 23.000£', '18.000£ to 23.000£'], 
                  ['23.001£ to 30.500£', '23.001£ to 30.500£'], 
                  ['30.501£ to 45.000£', '30.500£ to 45.000£'], 
-                 ['> 45.001£', '> 45.001£'],
-                 ['Prefer not to say', 'Prefer not to say']],
+                 ['> 45.001£', '> 45.001£']],
                   widget = widgets.RadioSelect
     )
 # consent
@@ -49,9 +48,6 @@ class Player(BasePlayer):
     
 # FUNCTIONS
 # PAGES
-
-class Introduction(Page):
-    form_model = 'player'
 
 class introduction_consent(Page):
     form_model = 'player'
@@ -71,7 +67,6 @@ class task_example(Page):
 
 # Page sequence
 page_sequence = [
-    Introduction,
     introduction_consent,
     Demographics,
     instructions,
