@@ -32,7 +32,7 @@ class Player(BasePlayer):
     )
 
     income = models.StringField(
-                                label='How high is your <b>yearly personal income before tax </b>? <br> <i> You may skip this question if you wish to </i>',
+                                label='How high is your <b>yearly personal income before tax </b>?',
         choices=[['< 18.000£', '< 18.000£'],
                  ['18.000£ to 23.000£', '18.000£ to 23.000£'], 
                  ['23.001£ to 30.500£', '23.001£ to 30.500£'], 
