@@ -21,14 +21,14 @@ class Player(BasePlayer):
 
     def make_field(label):
         return models.IntegerField(
-        choices=[['6', 'Agree completely'], ['5', 'Agree'], ['4', 'Somewhat agree '], 
-                 ['3', 'Somehat disagree'], ['2', 'Disagree'], ['1', 'Completely disagree'] ],                                
+        choices=[['6', 'Agree completely (6)'], ['5', '5'], ['4', '4'], 
+                 ['3', '3'], ['2', '2'], ['1', 'Completely disagree (1)'] ],                                
         label=label,
         widget=widgets.RadioSelectHorizontal,
     )
 
     # questionnaire
-    conservative_liberal = models.IntegerField( widget=widgets.RadioSelect, choices=[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4,5])
+    conservative_liberal = models.IntegerField( widget=widgets.RadioSelect,  choices=[['1', 'extremely liberal (1)'], ['2', '2'], ['3', '3'],['4', '4'], ['5', '5'], ['6', '6'], ['7', '7'],['8', '8'], ['9', '9'],  ['10', 'extremely conservative (10)'] ]
     climate_change_concern1 = make_field('I worry about the climate´s state.')
     climate_change_concern2 = make_field('Climate protection is important for our future.')
     climate_change_concern3 = make_field('We must protect the climate´s delicate equilibrium.')
