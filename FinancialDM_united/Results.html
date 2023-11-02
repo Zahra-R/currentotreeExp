@@ -7,26 +7,34 @@
 {% endblock %}
 
 {% block title %}
-The end
+Thank you for your participation.
 {% endblock %}
 
 {% block content %}
 
 
 
-<p> You have finished the study</p>
+<p> You have finished the study.</p>
+
+{{if sum_correct < 3}}
+    <p> Unfortunately, you answered more than one of the comprehension questions incorrectly. Therefore, you will not receive a bonus payment. </p>
+{{else}}
+    <p> <b> You will receive a bonus payment.</b> </p>
 
 
-<p> <b> This is your payoff</b> </p>
+        <p> The randomly drawn round was {{drawn_round}}.</p>
+
+        <p> In this round, you chose option {{relevant_round_choice}}.</p>
+
+       <p> With this option, your monetary bonus was {{outcome_bonus_points}} study dollar. This will be converted to {{outcome_bonus_pound}}£ and paid to you as a bonus.
+       </p>
+       <p> With this option, your carbon emissions were {{outcome_carbon}}lbs CO2. The carbon emissions will be realized through carbon emission certificates. 
+       </p>
+
+{{endif}}
 
 
-    <p> The randomly drawn round was {{drawn_round}}.</p>
 
-    In this round, you chose option {{relevant_round_choice}}.
-
-    With this option, your monetary bonus was {{outcome_money}}.
-
-    With this option, your carbon emissions were {{outcome_carbon}}. 
 
 
 

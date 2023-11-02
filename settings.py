@@ -119,6 +119,11 @@ PARTICIPANT_FIELDS = [
     'carbonLeft', 
     'certainFirst',
 
+    'comprehension_C1_correct' ,
+    'comprehension_C2_correct' ,
+    'comprehension_U1_correct',
+    'comprehension_U2_correct',
+
     ### CarbonTask Nina
     'task_rounds'
 

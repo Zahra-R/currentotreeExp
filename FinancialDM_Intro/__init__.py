@@ -38,17 +38,21 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    dataScience = models.BooleanField(initial=False)
-    dataTeach = models.BooleanField(initial=False)
+    consent1 = models.BooleanField(initial=False)
+    consent2 = models.BooleanField(initial=False)
     
 
 
 
 class Consent(Page):
     form_model = 'player'
-    #form_fields = ["dataScience","dataTeach"]
+    form_fields = ["consent1","consent2"]
 
 class Introduction(Page):
     form_model = 'player'
+
+class Introduction2(Page):
+    form_model = 'player'
  
-page_sequence = [Consent, Introduction]
+ 
+page_sequence = [Consent, Introduction,  Introduction2]
