@@ -25,14 +25,14 @@ class Player(BasePlayer):
     )
     education = models.StringField( label='What is your <b>highest education</b>?',
         choices=[['No formal education', 'No formal education'],
-                 ['Obligatory school', 'Obligatory school'], 
-                 ['Secondary school', 'Secondary school'],
-                 ['Higher education (Bachelor, Master, Degree)', 'Higher education (Bachelor, Master, Degree)']],
-                widget = widgets.RadioSelect
+                ['Compulsory education', 'Compulsory education (secondary school)'], 
+                 ['Further education', 'Further education'],
+                 ['Higher education (Bachelor, Master, PhD)', 'Higher education (Bachelor, Master, PhD)']],
+                 widget = widgets.RadioSelect
     )
 
-    income = models.StringField( blank=True,
-                                label='How high is your <b>yearly personal income before tax </b>? <br> <i> You may skip this question if you wish to </i>',
+    income = models.StringField(
+                                label='How high is your <b>yearly personal income before tax </b>?',
         choices=[['< 18.000£', '< 18.000£'],
                  ['18.000£ to 23.000£', '18.000£ to 23.000£'], 
                  ['23.001£ to 30.500£', '23.001£ to 30.500£'], 
