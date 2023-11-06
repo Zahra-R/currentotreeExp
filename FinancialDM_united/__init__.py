@@ -310,7 +310,8 @@ class choiceTaskC(Page):
    
 class choiceTaskU(Page):
     form_model = 'player'
-    form_fields = ["choice","input_keyboard", "page_load", "page_submit"]
+    #form_fields = ["choice","input_keyboard", "page_load", "page_submit"]
+    form_fields = ["choice","input_keyboard", "page_load", "page_submit", "newResponseTime"]
     @staticmethod
     def vars_for_template(player: Player):
         print("--------------------------Uuuuuuuuuncertain------------")

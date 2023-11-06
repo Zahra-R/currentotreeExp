@@ -50,9 +50,9 @@
 {% block content %}
 <p style="text-align: center; font-size: 0.9rem;">
     Round number <span id ="block_round_number" > </span> out of <span id="block_round_total"> </span>in this block. 
-    <!--   <progress id="myprogress" max="100" ></progress> -->
+    <!-- <progress id="myprogress" max="100" ></progress> -->
 </p>
-<p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options </p>
+<p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options:</p>
 
 <div class="container">
     <div class="row">
@@ -189,10 +189,10 @@
 
 <input id="page_load" type="hidden" name="page_load" value={{player.page_load}} />
 <input id="page_submit" type="hidden" name="page_submit" />
-
-
+<input id="newResponseTime" type="hidden" name="newResponseTime" />
 
 {{ formfield_errors 'page_load' }}
+{{ formfield_errors 'newResponseTime' }}
 {{ formfield_errors 'page_submit' }}
 {{ formfield_errors 'choice' }}
 {{ formfield_errors 'input_keyboard' }}
@@ -216,7 +216,6 @@
     var progress_total = "{{C.NUM_ROUNDS}}"
     var round_num = "{{game_round}}"
     //var progress = 100*(round_num / progress_total)
-    //$("#myprogress")[0].value= progress
 
 
     choiceListener = {
@@ -240,8 +239,9 @@
         AClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
+            var load_timestamp =  jQuery('#page_load').val();
+            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
-            console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("A");
             //jQuery('#left-stimulus').addClass('chosen-stimulus');
@@ -252,8 +252,9 @@
         BClick() {
             disable_inputs();
             var submit_timestamp = Date.now()
+            var load_timestamp =  jQuery('#page_load').val();
+            jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
-            console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("B");
             jQuery('#right-stimulus')[0].parentElement.classList.add("chosen-stimulus")
@@ -321,7 +322,6 @@
         console.log("enable firing")
     }
 
-
     function progress_experiment() {
         if (keys.size > 0) {
             $('#modal').modal('show');
@@ -351,7 +351,7 @@
 
     jQuery(document).ready(function () {
 
-        if (page_load == 'a') {
+        if (page_load == '0') {
             var load_timestamp = Date.now()
             jQuery('#page_load').val(String(load_timestamp));
         }
@@ -363,7 +363,6 @@
             switchOutcomeRowsOptionB()
         }
         if (reverse == 1) {
-            console.log("yesreverse")
             switchSides()
             choiceListener.KEY_J = 102
             choiceListener.KEY_F = 106

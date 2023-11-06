@@ -46,34 +46,8 @@
 
 
     table {
-        margin-left: auto;
-        margin-right: auto;
-        width: 370px;
+        width: 374px;
     }
-
-    .animated-progress {
-  width: 300px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 20px 10px;
-  border: 1px solid grey;
-  overflow: hidden;
-  position: relative;
-}
-
-#color-progress {
-  height: 100%;
-  display: block;
-  width: 0;
-  line-height: 30px;
-  position: absolute;
-  text-align: end;
-  padding-right: 5px;
-}
-
-#color-progress {
-  background-color: lightblue;
-}
 </style>
 
 {% endblock %}
@@ -84,8 +58,6 @@
      <!-- <progress id="myprogress" max="100" ></progress> -->
 </p>
 <p id="headerspan" style="font-size:200%;text-align:center;"> Please choose one of the options:</p>
-
-
 
 <div class="container">
     <div class="row">
@@ -211,9 +183,6 @@
 
 {% block scripts %}
 <script type="text/javascript">
-
-
-
     jQuery('.otree-btn-next').hide()
 
 
@@ -227,7 +196,6 @@
     var progress_total = "{{C.NUM_ROUNDS}}"
     var round_num = "{{game_round}}"
     //var progress = 100*(round_num / progress_total)
-   // $("#myprogress")[0].value= progress
 
 
     choiceListener = {
@@ -254,7 +222,6 @@
             var load_timestamp =  jQuery('#page_load').val();
             jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
-            console.log("left click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("A");
             //jQuery('#left-stimulus').addClass('chosen-stimulus');
@@ -268,7 +235,6 @@
             var load_timestamp =  jQuery('#page_load').val();
             jQuery('#newResponseTime').val(submit_timestamp - load_timestamp);
             jQuery('#page_submit').val(String(submit_timestamp));
-            console.log("right click firing")
             jQuery('.chosen-stimulus').removeClass('chosen-stimulus');
             jQuery('[name="choice"]').val("B");
             jQuery('#right-stimulus')[0].parentElement.classList.add("chosen-stimulus")
@@ -356,13 +322,12 @@
 
     jQuery(document).ready(function () {
 
-        if (page_load == 0) {
+        if (page_load == '0') {
             var load_timestamp = Date.now()
             jQuery('#page_load').val(String(load_timestamp));
         }
 
         if (reverse == 1) {
-            console.log("yesreverse")
             switchSides()
             choiceListener.KEY_J = 102
             choiceListener.KEY_F = 106
