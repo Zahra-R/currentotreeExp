@@ -154,7 +154,6 @@ class Player(BasePlayer):
     page_load = models.StringField(initial = '0', default = '0')
     page_submit = models.StringField(null=True)
     responsetime = models.IntegerField()
-    stimulusID = models.IntegerField()
     OptionARight = models.IntegerField()
     newResponseTime = models.FloatField()
     carbonLeft = models.BooleanField()
@@ -411,13 +410,11 @@ def outcome_risky(player:Player, drawn_round):
     return round_choice, outcome_bonus_points, outcome_carbon
 
 
-
 class Results(Page):
     form_model = 'player'
     @staticmethod
     def vars_for_template(player: Player):
         sum_correct = player.participant.comprehension_C1_correct + player.participant.comprehension_C2_correct +player.participant.comprehension_U1_correct + player.participant.comprehension_U2_correct
-        
         drawn_round = player.in_round(1).drawn_round
         drawn_game= "certain"
         if drawn_round > int(C.NUM_ROUNDS/2) and player.participant.certainFirst == True:
@@ -432,8 +429,13 @@ class Results(Page):
             player.outcome_bonus_pound = player.outcome_bonus_points / 25
         else:
             player.outcome_bonus_pound = 0
+        drawn_block = 1
+        if drawn_round > int(C.NUM_ROUNDS/2):
+            drawn_round_display = drawn_round - C.NUM_ROUNDS/2
+            drawn_block = 2
         return{
-            'drawn_round': drawn_round,
+            'drawn_round': drawn_round_display,
+            'drawn_block': drawn_block,
             'drawn_game': drawn_game,
             'relevant_round_choice': relevant_round_choice,
             'outcome_bonus_points': player.outcome_bonus_points,
