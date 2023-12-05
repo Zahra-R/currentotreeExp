@@ -33,19 +33,6 @@
 
 
 <div id="rate_statement" style="display:none; opacity:0;">
-    <div class="slidecontainer">
-        <p> How likely is this statement true?</p>
-        <table style="width:100%">
-            <tr>
-                <td class="rangelabel" style="width:20%"> very unlikely  </td>
-                <td style="width:60%">
-                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider untouched"
-                        id="range_likelyTrue" name="range_likelyTrue" >
-                </td>
-                <td class="rangelabel" style="width:20%"> very likely   </td>
-            </tr>
-        </table>
-    </div>
 
     <div class="slidecontainer">
         <p> How much do you agree with this statement?</p>
@@ -90,7 +77,6 @@
 {{ formfield_errors 'statementText' }}
 {{ formfield_errors 'statementID' }}
 {{ formfield_errors 'range_agree' }}
-{{ formfield_errors 'range_likelyTrue' }}
 {{ formfield_errors 'range_ccconcern' }}
 
 
@@ -156,18 +142,17 @@ $(document).ready(function () {
         $('#abtn')[0].value = "m"
         $('#bbtn')[0].value = "i"
         if (tellingLabel == "True") {
-            $('#abtn span').html("Box A: Critical")
-            $('#bbtn span').html("Box B: Alarming")
+            $('#abtn span').html("BOX A: Anti&nbsp;Climate Action")
+            $('#bbtn span').html("BOX B: Pro&nbsp;Climate Action&nbsp;")
         }
     } else {
         if (tellingLabel == "True") {
-            $('#bbtn span').html("Box B: Critical")
-            $('#abtn span').html("Box A: Alarming")
+            $('#bbtn span').html("BOX B: Anti&nbsp;Climate Action")
+            $('#abtn span').html("BOX A: Pro&nbsp;Climate Action&nbsp;")
         }
     }
 
 
-    $('#range_likelyTrue').on('input', onSliderChange )
     $('#range_agree').on('input', onSliderChange )
     $('#range_ccconcern').on('input', onSliderChange )
    

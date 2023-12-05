@@ -47,7 +47,6 @@ class Player(BasePlayer):
     ccc2 = make_field('Climate protection is important for our future.')
     ccc3 = make_field('I worry about the climate’s state.')
     ccc4 = make_field('Climate change has severe consequences for humans and nature.')
-    att_ccc = make_field('In this row, please mark the third circle (center circle) to indicate you are paying attention.')
     ccc10 = make_field('Climate change and its consequences are being exaggerated in the media.')     ### skepticism 6 items 
     ccc11 = make_field('Climate change is a racket.')
     ccc12 = make_field('As long as meteorologists are not even able to accurately forecast weather, climate cannot be reliably predicted either.')
@@ -64,6 +63,11 @@ class Player(BasePlayer):
     faithful = models.IntegerField(choices=[[1,'yes'], [0,'no']], label="Is there any reason why we should NOT use your data?")
     use_data = models.StringField(max_length=1000, blank=True, label="If we should NOT use your data, please specify why:")
     generalFeedback = models.StringField(max_length=3000, blank=True, label="Do you have any other comments or feedback on the study?")
+
+    click_debunk = models.BooleanField()
+    click_mechanism = models.BooleanField()
+    click_ipcc = models.BooleanField()
+    click_consequences = models.BooleanField()
   # FUNCTIONS
 
 
@@ -84,7 +88,7 @@ class Demographics(Page):
     
 class CCConcern(Page):
     form_model = 'player'
-    form_fields= ['ccc1', 'ccc2', 'ccc3', 'ccc4', 'att_ccc', 'ccc10', 'ccc11', 'ccc12', 'ccc13', 'ccc14', 'ccc15', 'ccc16'  ]
+    form_fields= ['ccc1', 'ccc2', 'ccc3', 'ccc4', 'ccc10', 'ccc11', 'ccc12', 'ccc13', 'ccc14', 'ccc15', 'ccc16'  ]
 
       
 class Pol_Att(Page):
@@ -96,30 +100,24 @@ class Pol_Att(Page):
     form_fields= [ "conservative_econ", "conservative_social" ] """
 
     
-class End(Page):
-    form_model = 'player'
-    form_fields = [   "faithful", "use_data", "generalFeedback"]
 
 
-class Conclude(Page):
-    form_model = 'player'
-    @staticmethod
-    def vars_for_template(player: Player):
-        return {
-             'seenM': player.participant.seenMisinfo
-        }
+
+
     
 
 class Conclude2(Page):
     form_model = 'player'
+    form_fields = ['click_consequences', 'click_debunk', 'click_ipcc', 'click_mechanism']
     @staticmethod
     def vars_for_template(player: Player):
         import string
         seenM = player.participant.seenMisinfo
+        seenMlI = player.participant.seenMislInfo
         misinfofile = open('CCsampling/ClimateMisinfo.json')
-        #infofile = open('sampling/ClimateInfo.json')
+        infofile = open('CCsampling/ClimateInfo.json')
         misinfo = json.load(misinfofile)['CCMisinfo']
-        #info = json.load(infofile)['CCInfo']
+        info = json.load(infofile)['CCInfo']
         seenMstatements = []
         seenMcorrections = []
         for x in seenM:
@@ -130,15 +128,26 @@ class Conclude2(Page):
             correctedstring = misinfo[x]['correctedStatement']
             correctedstring = correctedstring.replace("'", "´")
             seenMcorrections.append(correctedstring)
+        for x in seenMlI: 
+            statementstring = info[x]['finalStatement']
+            statementstring =statementstring.replace("'", "´")
+            seenMstatements.append(statementstring)
+            correctedstring = info[x]['correctedStatement']
+            correctedstring = correctedstring.replace("'", "´")
+            seenMcorrections.append(correctedstring)
             
         return {
             'seenM': seenM,
+            'seenMlI': seenMlI,
             'seenMstatements': seenMstatements,
             'seenMcorrections': seenMcorrections
         }
 
     
-        
+
+class End(Page):
+    form_model = 'player'
+    form_fields = ["faithful", "use_data", "generalFeedback"]
 
 
 
@@ -147,9 +156,9 @@ class Conclude2(Page):
 
 
 page_sequence = [
-    #Demographics,
-    #CCConcern,
-    #Pol_Att,
+    Demographics,
+    CCConcern,
+    Pol_Att,
     End,
     Conclude2
 ]

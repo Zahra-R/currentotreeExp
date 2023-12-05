@@ -6,6 +6,13 @@ Plase tell us what you think about the boxes:
 {% block styles %}
 <!-- Compiled and minified CSS -->
 <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+<style>
+label{
+   padding-top:20pt;
+   font-weight: bold;
+}
+</style>
+
 
 {% endblock %}
 
@@ -15,62 +22,101 @@ Plase tell us what you think about the boxes:
 
 
 <div style="padding-top:2vh; text-align: center; padding-left:1vw;">
-    <label style="font-weight: bold;" for="id_boxlikingInfo">How much do you like Box <span style="font-size: larger;"> A</span>?</label>
-   <table style="text-align: center; margin-left: auto; margin-right:auto">
-    <td> not at all &nbsp;</td>
-     {{ for choice in form.boxlikingInfo }}
-        <td> {{ choice }} </td>
-     {{ endfor }}
-     <td> &nbsp; very much </td>
- </table>
-</div>
-
-
-<div style="padding-top:4vh; text-align: center; padding-left:1vw;">
-    <label style="font-weight: bold;"  for="id_boxrecommendationInfo">Would you follow Box <span style="font-size: larger;"> A</span> if it were its own social media channel?</label>
-        <table style="text-align: center; margin-left: auto; margin-right:auto">
+      <table style="text-align: center; margin-left: auto; margin-right:auto">
+         <tr>
+            <td colspan="11"> <label for="id_boxlikingInfo">How much do you like Box <span
+                  style="font-size: larger;"> A</span>?</label>
+            </td>
+         </tr>
+         <tr>
+            <td> not at all &nbsp;</td>
+            {{ for choice in form.boxlikingInfo }}
+               <td> {{ choice }} </td>
+            {{ endfor }}
+            <td> &nbsp; very much </td>
+         </tr>
+      
+         <tr> <td colspan="11"> <label  for="id_boxrecommendationInfo">Would you follow Box <span
+                  style="font-size: larger;"> A</span> if it were its own social media channel?</label> </td>
+         </tr>
+         <tr>
             <td> very unlikely &nbsp;</td>
              {{ for choice in form.boxrecommendationInfo }}
                 <td> {{ choice }} </td>
              {{ endfor }}
              <td> &nbsp; very likely </td>
-         </table>
+         </tr>
+         {{if round_number == C.NUM_ROUNDS}}
+         <tr >
+           <td colspan="11"> <label for="id_boxpoliticsInfo"> What do you think is the political orientation of Box <span style="font-size: larger;"> A</span>? </label>  </td>
+         </tr>
+         <tr>
+            <td> very liberal &nbsp;</td>
+            {{ for choice in form.boxpoliticsInfo }}
+               <td> {{ choice }} </td>
+            {{ endfor }}
+            <td> &nbsp; very conservative </td>
+         </tr>
+         {{endif}}
+      
+      </table>
 </div>
 
-<div style="padding-top:4vh; text-align: center; padding-left:1vw;">
-    <label style="font-weight: bold;" for="id_boxlikingMisinfo">How much do you like Box  <span style="font-size: larger;"> B</span>?</label>
-     <table style="text-align: center; margin-left: auto; margin-right:auto">
-        <td> not at all &nbsp;</td>
-         {{ for choice in form.boxlikingMisinfo }}
-            <td> {{ choice }} </td>
-         {{ endfor }}
-         <td> &nbsp; very much </td>
-     </table>
- </div>
- 
- 
- <div style="padding-top:4vh; text-align: center; padding-left:1vw;">
-    <label style="font-weight: bold;" for="id_boxrecommendationMisinfo">Would you follow Box <span style="font-size: larger;"> B</span> if it were its own social media channel?</label>
-         <table style="text-align: center; margin-left: auto; margin-right:auto">
+
+
+
+
+<div style="padding-top:4vh; max-width:600px; text-align: center;margin: auto">
+   <hr> 
+
+
+
+   <div style="padding-top:2vh; text-align: center; padding-left:1vw;">
+      <table style="text-align: center; margin-left: auto; margin-right:auto">
+         <tr>
+            <td colspan="11"> <label for="id_boxlikingMisinfo">How much do you like Box <span
+                  style="font-size: larger;"> B</span>?</label>
+            </td>
+         </tr>
+         <tr>
+            <td> not at all &nbsp;</td>
+            {{ for choice in form.boxlikingMisinfo }}
+               <td> {{ choice }} </td>
+            {{ endfor }}
+            <td> &nbsp; very much </td>
+         </tr>
+      
+         <tr> <td colspan="11"> <label  for="id_boxrecommendationMisinfo">Would you follow Box <span
+                  style="font-size: larger;"> B</span> if it were its own social media channel?</label> </td>
+         </tr>
+         <tr>
             <td> very unlikely &nbsp;</td>
              {{ for choice in form.boxrecommendationMisinfo }}
                 <td> {{ choice }} </td>
              {{ endfor }}
              <td> &nbsp; very likely </td>
-         </table>
+         </tr>
+         {{if round_number == C.NUM_ROUNDS}}
+         <tr >
+           <td colspan="11"> <label for="id_boxpoliticsMisinfo"> What do you think is the political orientation of Box <span style="font-size: larger;"> B</span>? </label>  </td>
+         </tr>
+         <tr>
+            <td> very liberal &nbsp;</td>
+            {{ for choice in form.boxpoliticsMisinfo }}
+               <td> {{ choice }} </td>
+            {{ endfor }}
+            <td> &nbsp; very conservative </td>
+         </tr>
+         {{endif}}
+      
+      </table>
+</div>
 
 
- </div>
+<div style="max-width: 750px;">
+   <button id="nextst"  style=" margin-top: 4vh;" class="otree-btn-next btn btn-primary">Next</button>
 
- 
- <div style="max-width: 750px;">
-    <button id="nextst"  style=" margin-top: 4vh;" class="otree-btn-next btn btn-primary">Next</button>
-
- </div>
-    
-
-
-
+</div>
 
 
 </body>

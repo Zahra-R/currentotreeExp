@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    Thank you very much for your participation. 
+    Please take some time to read through this page.
 {% endblock %}
 
 {% block content %}
@@ -13,37 +13,35 @@
 
 
 <div >
- <p>
-    You have read 15 statements regarding the climate change. 
- </p>
- <p>  All these statements were posted publicly on social media. 
+ <p> All of the 15 statements from Box A and Box B were real public posts on social media. 
      However, some of the statements contained misleading or even false information about climate change. 
 </p> 
 
 <p>
     Please remember that, regardless of the posts you have read, <b>more than 97% of climate scientists agree that climate change is real</b> and it is caused by human greenhouse gas emissions.  The IPCC report, the most comprehensive body of climate change evidence with authors from all over the world, concludes that “It is unequivocal that human influence has warmed the atmosphere, ocean and land. 
-    Widespread and rapid changes in the atmosphere, ocean, cryosphere and biosphere have already occurred." The report <b>strongly urges to implement adequate actions to avoid dire consequences on global living conditions.</b>
+    Widespread and rapid changes in the atmosphere, ocean, cryosphere and biosphere have already occurred." The report <b>strongly urges to implement adequate actions to avoid dire consequences on global living conditions.</b> On the other hand, some people and institutions have vested interests to avoid climate action. Fossil fuel companies, for instance, have invested billions of dollars in communication that opposes climate action.
 </p>
     
-<p>
-    On the other hand, some people and institutions have vested interests to avoid climate action. Fossil fuel companies, for instance, have invested billions of dollars in communication that opposes climate action.
+<p> This is why there is a lot of contradicting and, unfortunately, sometimes false or misleading information out there. Some of the information contradicts the best scientific evidence, some might be imprecise, exaggerated or biased.
+    
+    If you want to know which of the statements that you read during this study were inaccurate, you can find them in the table below. By <i>"inaccurate"</i> we mean statements that are misleading, distorted or contradicting scientific evidence. The table provides correcting statements that contain facts based on scientific publications or official sources (e.g. the International Energy Agency, IEA).
 
-    Below, you find all statements that you have read during this study that were <i>misleading</i>. By "misleading", we mean that they do not correspond to the best scienitific evidence available or that they present information in a distorted or biased light. 
-    We have created counterstatements that are based on scientific publications and official sources (e.g., government approved sources).
+    While most inaccurate statements were from Box {{if player.participant.reverseBoxes == False}} A{{else}} B{{endif}}, Box {{if player.participant.reverseBoxes == False}} B {{else}} A{{endif}} also contained some inaccurate statements. Find them with correcting responses below. 
 </p>
 
 <p>
-    You can read more about climate myths and how they can be debunked here: 
+    <a id="debunk" href="https://skepticalscience.com/argument.php" target="_blank" rel="noopener noreferrer">You can read more about climate myths and how they can be debunked here.</a>
 </p>
+
+<p> <a id="mechanism" href="https://www.youtube.com/watch?v=sTvqIijqvTg" target="_blank" rel="noopener noreferrer"> Not only is the data clear that fossil fuel emissions cause the global temperature to increase, the physical mechanisms of the greenhouse gas effect are well understood. </a> </p>
 <p>
-    You can read more about the physical details of climate change and climate science here: 
+   <a id="consequences" href="https://www.un.org/en/climatechange/what-is-climate-change" target="_blank" rel="noopener noreferrer">You can read more about climate change and its consequences here.  </a> 
 </p>
-    Here, you can find the latest IPCC report. 
+    <a id="ipcc" href="https://www.ipcc.ch/report/ar6/syr/resources/spm-headline-statements/" target="_blank" rel="noopener noreferrer"> Here, you can find the latest IPCC report. </a>
     
     
  </p>   
 
- <p> If you have any questions or concerns you can contact zahra.rahmani@unibas.ch</p>
 
  <table id="debriefTable" class="stripe hover row-border">
  </table>
@@ -51,9 +49,23 @@
 </div>
 
 
+<div class="next-btn">  
+    <div style="float: right; padding-top: 5vh;">
+         {% next_button %} 
+    </div>
+</div> 
 
 
-    
+
+<input type="hidden" name="click_consequences" id="click_consequences" value="False" />
+<input type="hidden" name="click_debunk" id="click_debunk" value="False" />
+<input type="hidden" name="click_ipcc" id="click_ipcc"  value="False"/>
+<input type="hidden" name="click_mechanism" id="click_mechanism" value="False" />
+
+{{ formfield_errors 'click_consequences' }}
+{{ formfield_errors 'click_debunk' }}
+{{ formfield_errors 'click_ipcc' }}
+{{ formfield_errors 'click_mechanism' }}  
 
 {% endblock %}
 
@@ -76,7 +88,7 @@
 
 
 fillTable = function(){
-    for (let i = 0; i < seenM.length; i++){ 
+    for (let i = 0; i < seenMstatements.length; i++){ 
         thisseenM = seenMstatements[i]
         thisseenM = thisseenM.replaceAll("´", "'")
         thiscorrectedM = seenMcorrections[i]
@@ -104,7 +116,7 @@ $(document).ready(function() {
     setTimeout(function () {
         $('#debriefTable').DataTable({
             "columns": [
-                { "data": "Misleading", title:"Misleading Statement", width:"45%"},
+                { "data": "Misleading", title:"Inaccurate Statement", width:"45%"},
                 { "data": "Corrected" , title:"Response in Line with Scientific Evidence", width:"55%"},
 
             ], 
@@ -113,6 +125,15 @@ $(document).ready(function() {
         });
 
     }, 1000)
+
+    $('a').click(function() {
+        console.log($(this))
+        console.log(`${String("click_" + $(this).attr("id"))}`)
+        forminputs[`${String("click_" + $(this).attr("id"))}`].value = "True"
+   
+    })
+    //...
+
 
 } );
 

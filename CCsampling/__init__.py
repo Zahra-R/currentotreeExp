@@ -14,6 +14,10 @@ class C(BaseConstants):
     NAME_IN_URL = 'SAMPLING'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 15
+    misinfofile = open('CCsampling/ClimateMisinfo.json')
+    infofile = open('CCsampling/ClimateInfo.json')
+    misinfo = json.load(misinfofile)['CCMisinfo']
+    info = json.load(infofile)['CCInfo']
 
 
 class Subsession(BaseSubsession):
@@ -25,7 +29,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     boxChoice = models.StringField( choices = ['i', 'm'])
     range_agree = models.IntegerField( min=-100, max=100)
-    range_likelyTrue = models.IntegerField( min=-100, max=100)
+    # range_likelyTrue = models.IntegerField( min=-100, max=100)
     range_ccconcern = models.IntegerField( min=-100, max=100)
     statementText =models.StringField()
     statementID = models.StringField()
@@ -33,8 +37,17 @@ class Player(BasePlayer):
     boxrecommendationInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box A if it were its own social media channel?',widget = widgets.RadioSelect )
     boxlikingMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='How much do you like Box B?' , widget = widgets.RadioSelect)
     boxrecommendationMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box B if it were its own social media channel?',widget = widgets.RadioSelect )
+    boxpoliticsMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect)
+    boxpoliticsInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect )
+    InfohasDebrief = models.BooleanField()
+   
     reverseBoxes = models.BooleanField()
     tellingBoxLabels = models.BooleanField()
+
+    click_debunk = models.BooleanField()
+    click_mechanism = models.BooleanField()
+    click_ipcc = models.BooleanField()
+    click_consequences = models.BooleanField()
    
 
 
@@ -47,6 +60,7 @@ def creating_session(subsession:Subsession):
             player.participant.randomMisinfoArray = random.sample(range(1,79),C.NUM_ROUNDS)
             player.participant.reverseBoxes = next(reverse_display)
             player.participant.seenMisinfo = []
+            player.participant.seenMislInfo = []
 
 
 
@@ -82,7 +96,7 @@ def saveParticipantVarsToPlayer(player: Player):
 
 class sampling(Page):
     form_model = 'player'
-    form_fields = ['boxChoice','statementText', 'statementID', 'range_ccconcern', 'range_agree', 'range_likelyTrue']
+    form_fields = ['boxChoice','statementText', 'statementID', 'range_ccconcern', 'range_agree']
     @staticmethod
     def vars_for_template(player: Player):
         round_number = player.round_number
@@ -90,8 +104,10 @@ class sampling(Page):
         infofile = open('CCsampling/ClimateInfo.json')
         misinfo = json.load(misinfofile)['CCMisinfo']
         info = json.load(infofile)['CCInfo']
-        MisinfoText = misinfo[player.participant.randomMisinfoArray[round_number-1]]['finalStatement']
-        InfoText = info[player.participant.randomInfoArray[round_number-1]]['finalStatement']
+        MisinfoText = C.misinfo[player.participant.randomMisinfoArray[round_number-1]]['finalStatement']
+        InfoText = C.info[player.participant.randomInfoArray[round_number-1]]['finalStatement']
+        player.InfohasDebrief = True if "correctedStatement" in C.info[player.participant.randomInfoArray[round_number-1]] else False
+        print("hello mislieading info", C.info[player.participant.randomInfoArray[round_number-1]])
         # these are tweetids, we are not submitting them. We only submit the index of the statement in the json file (internal statementID)
         #MisinfoID = misinfo[player.participant.randomMisinfoArray[round_number-1]]['tweetid']
         #InfoID = info[player.participant.randomInfoArray[round_number-1]]['tweetid']
@@ -108,30 +124,26 @@ class sampling(Page):
     def before_next_page(player: Player, timeout_happened):
         if(player.boxChoice == "m"):
             player.participant.seenMisinfo.append(player.participant.randomMisinfoArray[player.round_number-1])
+        else:
+            if(player.InfohasDebrief == True ):
+               player.participant.seenMislInfo.append(player.participant.randomInfoArray[player.round_number-1]) 
 
-
-# class _sampling(Page):
-#     form_model = 'player'
-#     form_fields = ['boxChoice','statementText', 'statementID','range_ccconcern', 'range_agree', 'range_likelyTrue']
-#     @staticmethod
-#     def vars_for_template(player: Player):
-#         round_number = player.round_number
-#         return {
-#             'round_number': round_number,
-#             'randomInfo': player.participant.randomInfoArray[round_number-1],
-#             'randomMisinfo': player.participant.randomMisinfoArray[round_number-1],
-#             'reverseBoxes': player.participant.reverseBoxes
-#             }
-#     @staticmethod
-#     def before_next_page(player: Player, timeout_happened):
-#         if(player.boxChoice == "m"):
-#             player.participant.seenMisinfo.append(player.participant.randomMisinfoArray[player.round_number-1])
 
 
 
 class boxrating(Page):
     form_model = 'player'
-    form_fields = ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo']
+    @staticmethod
+    def get_form_fields(player):
+        if player.round_number == C.NUM_ROUNDS:
+            return ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo', 'boxpoliticsInfo', 'boxpoliticsMisinfo' ]
+        else:
+            return ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo' ]
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            'round_number': player.round_number,
+        }
     @staticmethod
     def is_displayed(player: Player):
         return (player.round_number % 5 == 0)

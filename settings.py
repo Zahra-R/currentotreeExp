@@ -2,82 +2,13 @@ from os import environ
 
 
 SESSION_CONFIGS = [
-    ### EDEG -3
-    dict(
-        name='EDEG_study_FullDesing_Reps', 
-        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
-        num_demo_participants=5, 
-        group = "reps"
-    ),
-
-    dict(
-        name='EDEG_study2_FullDesign_Dems', 
-        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
-        num_demo_participants=5, 
-        group = "dems"
-    ),
-
-    dict(
-        name='EDEG_study2_Salient_PayoffSwitches_SafeEmitsFirst',
-        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
-        num_demo_participants=5,
-        Exp_Con=2,
-        Salience= True,
-        PayoffSwitches = True
-    ),
-    dict(
-        name='DEG_study2_EmissionsDecay',
-        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
-        num_demo_participants=5,
-        Exp_Con=3
-    ),
-    dict(
-        name='DEG_study2_Control',
-        app_sequence=['EDEGIntro', 'EDEG3', 'EDEGScales',], 
-        num_demo_participants=5,
-        Exp_Con=1,
-        doc="""
-         Here you can make potential comments that will be displayed to the admin
-         """
-    ),
+   
     ### CC SAMPLING
     dict(
-        name='samplingPilot',
+        name='CC_Sampling_Pilot',
         app_sequence=['CCsampling_intro', 'CCsampling', 'CCsampling_scales'],
         num_demo_participants=5,
-    ),
-    ### FINANCIAL DECISION MAKING
-     dict(
-        name='FinancialDM_CertainFirst',
-        app_sequence=['FinancialDM_Intro', 'FinancialDM_C', 'FinancialDM_U'],
-        num_demo_participants=5,
-        certainFirst = True
-    ),
-    dict(
-        name='FinancialDM_CertainSecond',
-        app_sequence=['FinancialDM_Intro', 'FinancialDM_U', 'FinancialDM_C'],
-        num_demo_participants=5,
-        certainFirst = False
-    ),
-    
-    dict(
-        name='FinancialDM_new',
-        app_sequence=['FinancialDM_Intro', 'FinancialDM_united'],
-        num_demo_participants=5
-    ),
-
-     dict(
-         name='carbontask',
-         app_sequence=['Nina_survey', 'Nina_carbontask',  'Nina_questionnaire', 'Nina_footprint_calculator'],
-         num_demo_participants=10,
-     ),
-
-     dict(
-       name='tracking_demo',
-       display_name="Tracking Demo",
-       num_demo_participants=3,
-       app_sequence=['tracking_demo']
-    ),
+    )
 
 
 ]
@@ -92,40 +23,17 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 PARTICIPANT_FIELDS = [
-    # EDEG FIELDS
-    'Exp_Con',
-    'Salience',
-    'reversedbuttons',
-    'outcomeA',
-    'outcomeB',
-    'chosen_round',
-    'chosen_round_outcome',
-    'chosen_round_choice',
-    'payoff_decimal',
-    'game_rounds', 
-    'finished',
-    'SwitchPayoffs',
+   
 
     #CC SAMPLING FIELDS
     'randomInfoArray',
     'randomMisinfoArray', 
     'reverseBoxes',
     'seenMisinfo',
+    'seenMislInfo',
     'telling_box_label',
 
-    ### FINANCIAL DECISION MAKING
-    'shuffledOrderC',
-    'shuffledOrderU',
-    'carbonLeft', 
-    'certainFirst',
-
-    'comprehension_C1_correct' ,
-    'comprehension_C2_correct' ,
-    'comprehension_U1_correct',
-    'comprehension_U2_correct',
-
-    ### CarbonTask Nina
-    'task_rounds'
+  
 
 ]
 
