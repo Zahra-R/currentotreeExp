@@ -37,21 +37,35 @@ def creating_session(subsession:Subsession):
             player.participant.telling_box_label = next(box_labels)
 
 
-
 #PLAYER FUNCTION 
+def make_field(label):
+        return models.IntegerField(
+            choices=[1,2,3,4,5],
+            label=label,
+            widget=widgets.RadioSelect,
+            )
+
+
+#PLAYER Variables
 class Player(BasePlayer):
     dataScience = models.BooleanField(initial=False)
     dataTeach = models.BooleanField(initial=False)
     mobileDevice= models.BooleanField(initial=False, blank=True)
     prolificIDMissing= models.BooleanField(initial=False)
     range_ccconcern = models.IntegerField( min=-100, max=100)
+
+    ccc1 = make_field('We must protect the climate’s delicate equilibrium.') ## concern 4 items
+    ccc2 = make_field('Climate protection is important for our future.')
+    ccc3 = make_field('I worry about the climate’s state.')
+    ccc4 = make_field('Climate change has severe consequences for humans and nature.')
+    ccc10 = make_field('Climate change and its consequences are being exaggerated in the media.')     ### skepticism 6 items 
+    ccc11 = make_field('Climate change is a racket.')
+    ccc12 = make_field('As long as meteorologists are not even able to accurately forecast weather, climate cannot be reliably predicted either.')
+    ccc13 = make_field('There are larger problems than climate protection.')
+    ccc14 = make_field('I do not feel threatened by climate change.')
+    ccc15 = make_field('The impacts of climate change are unpredictable; thus, my climate-friendly behavior is futile.')
+    ccc16 = make_field('Climate protection needlessly impedes economic growth.')
    
-
-
-
-        
-
-
 
 # ---------------------------------------------------------------
 # ------------------- PAGES--------------------------------------
@@ -72,20 +86,17 @@ class Consent(Page):
             "nolabel": player.participant.label == False  #None
             }
     
-
     
 class Introduction(Page):
     form_model = 'player'
     
 
-
-class beforeTask(Page):
+class CCConcern(Page):
     form_model='player'
-    form_fields = ['range_ccconcern']
-
-
+    form_fields = ['range_ccconcern','ccc1', 'ccc2', 'ccc3', 'ccc4', 'ccc10', 'ccc11', 'ccc12', 'ccc13', 'ccc14', 'ccc15', 'ccc16']
+    
 page_sequence = [
     Consent, 
     Introduction,
-    beforeTask
+    CCConcern
 ]

@@ -39,21 +39,9 @@ def make_field(label):
 class Player(BasePlayer):
     gender = models.IntegerField(choices=[[1,'Male'], [2,'Female'],[3,'Diverse'], [4,'Other']])
     age = models.IntegerField(min=18, max=100, max_length=2)
-    hh_income = models.IntegerField(choices=[[1,'up to 30k'], [2,'between 30k and 50k'],[3,'between 50k and 80k'], [4,'more than 80k'], [5, "prefer not to say"]])
-    hh_party = models.IntegerField(choices=[[1, "Democratic Party"], [2, "Republican Party"], [3, "Other"]])
-    hh_party_other = models.StringField(max_length=150, blank=True, label="Please specify")
+    hh_income = models.IntegerField(choices=[[1,'up to £18k'], [2,'between £18k and £24k'],[3,'between £24k and £35k'], [4,'more than £35k'], [5, "prefer not to say"]])
     conservative_liberal = models.IntegerField( widget=widgets.RadioSelect, choices=[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4,5])
-    ccc1 = make_field('We must protect the climate’s delicate equilibrium.') ## concern 4 items
-    ccc2 = make_field('Climate protection is important for our future.')
-    ccc3 = make_field('I worry about the climate’s state.')
-    ccc4 = make_field('Climate change has severe consequences for humans and nature.')
-    ccc10 = make_field('Climate change and its consequences are being exaggerated in the media.')     ### skepticism 6 items 
-    ccc11 = make_field('Climate change is a racket.')
-    ccc12 = make_field('As long as meteorologists are not even able to accurately forecast weather, climate cannot be reliably predicted either.')
-    ccc13 = make_field('There are larger problems than climate protection.')
-    ccc14 = make_field('I do not feel threatened by climate change.')
-    ccc15 = make_field('The impacts of climate change are unpredictable; thus, my climate-friendly behavior is futile.')
-    ccc16 = make_field('Climate protection needlessly impedes economic growth.')
+   
     ind1 = make_field('The government interferes far too much in our everyday lives.')
     ind2 = make_field('I feel that people who are successful in business have a right to enjoy their wealth as they see fit.')
     ind3 = make_field('Too many people expect society to do things for them that they should be doing for themselves.')
@@ -83,17 +71,13 @@ class Player(BasePlayer):
 
 class Demographics(Page):
     form_model = 'player'
-    form_fields = ['age', 'gender', 'hh_income', "hh_party", "hh_party_other"]
+    form_fields = ['age', 'gender', 'hh_income', "conservative_liberal"]
 
     
-class CCConcern(Page):
-    form_model = 'player'
-    form_fields= ['ccc1', 'ccc2', 'ccc3', 'ccc4', 'ccc10', 'ccc11', 'ccc12', 'ccc13', 'ccc14', 'ccc15', 'ccc16'  ]
-
       
 class Pol_Att(Page):
     form_model = 'player'
-    form_fields= ['ind1', 'ind2', 'ind3', 'hie1','hie2', 'hie3' , "conservative_liberal" ]
+    form_fields= ['ind1', 'ind2', 'ind3', 'hie1','hie2', 'hie3'  ]
     
 """ class Conservative(Page):
     form_model = 'player'
@@ -157,7 +141,6 @@ class End(Page):
 
 page_sequence = [
     Demographics,
-    CCConcern,
     Pol_Att,
     End,
     Conclude2

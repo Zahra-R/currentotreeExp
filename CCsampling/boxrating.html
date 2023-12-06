@@ -24,8 +24,7 @@ label{
 <div style="padding-top:2vh; text-align: center; padding-left:1vw;">
       <table style="text-align: center; margin-left: auto; margin-right:auto">
          <tr>
-            <td colspan="11"> <label for="id_boxlikingInfo">How much do you like Box <span
-                  style="font-size: larger;"> A</span>?</label>
+            <td colspan="11"> <label for="id_boxlikingInfo">How much do you like Box <span style="font-size: larger;"> A</span>?</label>
             </td>
          </tr>
          <tr>
@@ -36,8 +35,7 @@ label{
             <td> &nbsp; very much </td>
          </tr>
       
-         <tr> <td colspan="11"> <label  for="id_boxrecommendationInfo">Would you follow Box <span
-                  style="font-size: larger;"> A</span> if it were its own social media channel?</label> </td>
+         <tr> <td colspan="11"> <label  for="id_boxrecommendationInfo">Would you follow Box <span  style="font-size: larger;"> A</span> if it were its own social media channel?</label> </td>
          </tr>
          <tr>
             <td> very unlikely &nbsp;</td>
@@ -51,12 +49,22 @@ label{
            <td colspan="11"> <label for="id_boxpoliticsInfo"> What do you think is the political orientation of Box <span style="font-size: larger;"> A</span>? </label>  </td>
          </tr>
          <tr>
-            <td> very liberal &nbsp;</td>
+            <td> very left-leaning &nbsp;</td>
             {{ for choice in form.boxpoliticsInfo }}
                <td> {{ choice }} </td>
             {{ endfor }}
-            <td> &nbsp; very conservative </td>
+            <td> &nbsp; very right-leaning </td>
          </tr>
+         <tr >
+            <td colspan="11"> <label for="id_boxtrustInfo"> How trustworthy do you find Box <span style="font-size: larger;"> A</span>? </label>  </td>
+          </tr>
+          <tr>
+             <td> not at all trustworthy &nbsp;</td>
+             {{ for choice in form.boxtrustInfo }}
+                <td> {{ choice }} </td>
+             {{ endfor }}
+             <td> &nbsp; very trustworthy </td>
+          </tr>
          {{endif}}
       
       </table>
@@ -107,6 +115,16 @@ label{
             {{ endfor }}
             <td> &nbsp; very conservative </td>
          </tr>
+         <tr >
+            <td colspan="11"> <label for="id_boxtrustMisinfo"> How trustworthy do you find Box <span style="font-size: larger;"> B</span>? </label>  </td>
+          </tr>
+          <tr>
+             <td> not at all trustworthy &nbsp;</td>
+             {{ for choice in form.boxtrustMisinfo }}
+                <td> {{ choice }} </td>
+             {{ endfor }}
+             <td> &nbsp; very trustworthy </td>
+          </tr>
          {{endif}}
       
       </table>

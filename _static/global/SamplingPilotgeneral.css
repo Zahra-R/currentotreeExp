@@ -8,11 +8,10 @@
 }
 
 .choiceButton {
-    /* height: 15vh; */
-    padding:inherit;
-    /* max-height: 140pt; */
+    min-height: 155px;
+    min-width: min(230px,45vw);
+    padding:0;
     border-radius: 15pt;
-    /* width: 30vw; */
     max-width: 200pt;
     text-decoration: none;
     color: #fff;
@@ -44,8 +43,8 @@
 
 .choiceButton span {
     font-style: normal;
-    /* font-size: xx-large; */
-    font-size: clamp(1rem, 3.5vw, 30px);;
+    font-size: xx-large;
+    /* font-size: clamp(1rem, 3.5vw, 30px);; */
     text-transform: uppercase;
     letter-spacing: .5px;
 }

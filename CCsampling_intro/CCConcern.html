@@ -1,0 +1,120 @@
+
+{% block styles %}
+    <link href="{{ static 'global/SamplingPilotgeneral.css'}}" rel="stylesheet">
+    <style>  
+        table.radiotable th, table.radiotable td {
+            padding: 12px;
+            text-align: center;
+            max-width: none; /* No max-width for the entire table */
+        }
+        /* Left-align the first column */
+        table.radiotable th:first-child, table.radiotable td:first-child {
+            text-align: left;
+        }
+        /* Alternating row colors */
+        table.radiotable tr:nth-child(even) {
+            background-color: 	#F8F8F8
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    Attitudes about Climate Change
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <h4 id="caption2"> Please move the slider to reflect your attitude.  </h4>
+
+<div id="choice">
+   
+    <div class="slidecontainer" style="margin-top:10vh;">
+        <p> How concerned are you about climate change?</p>
+        <table style="width:100%">
+            <tr>
+                <td class="rangelabel" style="width:20%"> not at all  </td>
+                <td style="width:60%">
+                    <input style="width:100%" type="range" min="-100" max="100" value="0" step="1" class="slider untouched"
+                        id="range_ccconcern" name="range_ccconcern" >
+                </td>
+                <td class="rangelabel" style="width:20%"> very much  </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<h4> How much do you agree with the following statements?</h4>
+
+<table class="radiotable">
+    <tr> <th></th> <th    class="radio-column"> not at all</th> <th class="radio-column" > </th class="radio-column"> <th class="radio-column"> </th> <th class="radio-column"></th> <th    class="radio-column"> very much </th> </tr>
+
+
+    {{ for field in form }}
+       {{if field.type == "RadioField"  }}
+       <tr>
+            <th style="font-weight:normal;">{{ field.label }}</th>
+            {{ for choice in field }}
+                <td>{{ choice }}</td>
+            {{ endfor }}
+         </tr>
+        {{endif}}
+    {{ endfor }}
+   
+</table>
+
+
+<div class="next-btn radiotable">  
+    <div style="float: right; padding-top: 2vh;">
+         {% next_button %} 
+    </div>
+</div> 
+
+</body>
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"> </script>
+
+
+<script> 
+
+var myform = "{{form}}"
+
+for(element in myform){
+    console.log(element.label)
+}
+
+triggernext = function() {
+    $("#mynextbtn").trigger("click")
+}
+
+    
+function onSliderChange(event) {
+    if($(event.target).hasClass('untouched')){
+            $(event.target).removeClass('untouched')
+            document.getElementById("nextst").disabled = false;
+            
+        }
+}
+
+$(document).ready(function () {
+    
+    $('#range_ccconcern').on('input', onSliderChange )
+   
+})
+
+
+
+
+
+
+</script>
+
+{% endblock %}
+
+

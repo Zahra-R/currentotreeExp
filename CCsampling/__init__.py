@@ -39,6 +39,8 @@ class Player(BasePlayer):
     boxrecommendationMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9],label='Would you follow Box B if it were its own social media channel?',widget = widgets.RadioSelect )
     boxpoliticsMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect)
     boxpoliticsInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect )
+    boxtrustInfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect )
+    boxtrustMisinfo = models.IntegerField(choices=[1,2,3,4,5,6,7,8,9], widget = widgets.RadioSelect )
     InfohasDebrief = models.BooleanField()
    
     reverseBoxes = models.BooleanField()
@@ -136,7 +138,7 @@ class boxrating(Page):
     @staticmethod
     def get_form_fields(player):
         if player.round_number == C.NUM_ROUNDS:
-            return ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo', 'boxpoliticsInfo', 'boxpoliticsMisinfo' ]
+            return ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo', 'boxpoliticsInfo', 'boxpoliticsMisinfo', 'boxtrustInfo', 'boxtrustMisinfo' ]
         else:
             return ['boxlikingInfo', 'boxrecommendationInfo', 'boxlikingMisinfo', 'boxrecommendationMisinfo' ]
     @staticmethod

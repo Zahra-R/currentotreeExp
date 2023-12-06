@@ -16,15 +16,15 @@
         Round {{round_number}} out of {{C.NUM_ROUNDS}}
      </p>
 <div id="choice">
-    <table style=" width:100%" class="table" id="choicetable">
+    <table style=" width:100%; padding:0px;" class="table" id="choicetable">
         <tbody>
           
                 
 
             <tr style="border-color: white;">
-                <td style="text-align: center;"><button  type="button"  id="abtn" value="i" onclick="statement.showRoundText(boxname = this.id, infoType = this.value)"
+                <td style="text-align: center; padding:0px;"><button  type="button"  id="abtn" value="i" onclick="statement.showRoundText(boxname = this.id, infoType = this.value)"
                     class="choiceButton" disabled> <span> Box A </span></button></td>
-                <td style="text-align: center;"><button type="button"  id="bbtn" value="m" onclick="statement.showRoundText(boxname =this.id, infoType = this.value)"
+                <td style="text-align: center; padding:0px;"><button type="button"  id="bbtn" value="m" onclick="statement.showRoundText(boxname =this.id, infoType = this.value)"
                     class="  choiceButton" disabled><span> Box B</span> </button></td>
             </tr>
         </tbody>
@@ -129,7 +129,7 @@ function onSliderChange(event) {
     if($(event.target).hasClass('untouched')){
             $(event.target).removeClass('untouched')
             countSliderChange += 1
-            if(countSliderChange == 3){
+            if(countSliderChange == 2){
                 document.getElementById("nextst").disabled = false;
             }   
         }
@@ -137,7 +137,7 @@ function onSliderChange(event) {
 
 $(document).ready(function () {
     //// danger remove next line
-    document.getElementById("nextst").disabled = false;
+    //document.getElementById("nextst").disabled = false;
     if (reverse == "True") {
         $('#abtn')[0].value = "m"
         $('#bbtn')[0].value = "i"
