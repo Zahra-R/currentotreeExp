@@ -127,8 +127,6 @@ $(document).ready(function() {
     }, 1000)
 
     $('a').click(function() {
-        console.log($(this))
-        console.log(`${String("click_" + $(this).attr("id"))}`)
         forminputs[`${String("click_" + $(this).attr("id"))}`].value = "True"
    
     })

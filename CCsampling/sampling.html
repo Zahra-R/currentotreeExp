@@ -169,7 +169,6 @@ statement = {
          //if($('#abtn').html().length < 40 && $('#abtn').html().length < 40 ){
             document.cookie = "boxname=" + boxname  // + ";path=/" + round_number;
             document.cookie = "infoType=" + infoType //+ ";path=/" + round_number;
-            console.log("here in showroundtext printing cookies" , document.cookie) 
             if (infoType == "i") {
                 roundText = String("{{InfoText}}")
                 roundTextID = "{{randomInfo}}"
@@ -200,11 +199,8 @@ statement = {
 }
 
 function checkForChoice() {
-    console.log("checkingcookies checkfchoice")
 
     if (getCookie("boxname")!='') {
-            console.log("at least that workds")
-            console.log(getCookie("boxname"))
             statement.showRoundText(boxname = getCookie('boxname'), infoType = getCookie('infoType'))
             
         } 
