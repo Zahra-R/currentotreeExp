@@ -135,7 +135,8 @@ class End(Page):
 
 
 
-
+class Conclude(Page):
+    form_model = 'player'
 
 
 
@@ -143,5 +144,6 @@ page_sequence = [
     Demographics,
     Pol_Att,
     End,
-    Conclude2
+    Conclude2,
+    Conclude
 ]
