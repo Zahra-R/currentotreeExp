@@ -168,6 +168,10 @@
     border-color: #46505A;
 }
 
+.next-btn{
+  margin-bottom: 2vh;
+}
+
 
 @media only screen and (max-width: 600px) {
  
