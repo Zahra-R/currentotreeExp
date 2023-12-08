@@ -48,7 +48,7 @@ class Player(BasePlayer):
     hie1 = make_field('Our society would be better off if the distribution of wealth was more equal.')
     hie2 = make_field('A lot of problems in our society come from the decline in the traditional family, where the man works and the woman stays home.')
     hie3 = make_field('Discrimination against minorities is still a very serious problem in our country.')
-    faithful = models.IntegerField(choices=[[1,'yes'], [0,'no']], label="Is there any reason why we should NOT use your data?")
+    faithful = models.IntegerField(choices=[[1,'Yes, I explain why my data should not be used below.'], [0,'No, please use my data.']], label="Is there any reason why we should NOT use your data?", initial=0)
     use_data = models.StringField(max_length=1000, blank=True, label="If we should NOT use your data, please specify why:")
     generalFeedback = models.StringField(max_length=3000, blank=True, label="Do you have any other comments or feedback on the study?")
 

@@ -97,6 +97,7 @@ class CCConcern(Page):
     
 page_sequence = [
     Consent, 
-    Introduction,
-    CCConcern
+    CCConcern,
+    Introduction
+    
 ]
